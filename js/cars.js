@@ -1,0 +1,241 @@
+/* Cars data for AutoMarket Maroc */
+const makeCarSvg = (label, background, foreground) => {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+      <rect width="800" height="480" fill="${background}"/>
+      <rect x="28" y="28" width="744" height="424" rx="24" fill="rgba(255,255,255,0.18)" stroke="${foreground}" stroke-opacity="0.25"/>
+      <circle cx="190" cy="160" r="70" fill="${foreground}" opacity="0.12"/>
+      <path d="M120 300L245 136h215l90 164H120z" fill="${foreground}" opacity="0.18"/>
+      <text x="400" y="250" text-anchor="middle" font-size="40" font-family="Arial, sans-serif" fill="${foreground}" font-weight="700">${label}</text>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
+const CARS_DATA = [
+  {
+    id: '1',
+    brand: 'Volkswagen',
+    model: 'Golf 7',
+    year: 2016,
+    priceMAD: 145000,
+    price: '145000 MAD',
+    mileage: '120000 km',
+    fuel: 'Diesel',
+    transmission: 'Manual',
+    city: 'Casablanca',
+    description: 'Well-maintained Golf 7, serviced regularly. Good condition with original parts and a clean history.',
+    image: 'images/cars/car1.jpg',
+    img: 'images/cars/car1.jpg'
+  },
+  {
+    id: '2',
+    brand: 'Dacia',
+    model: 'Duster',
+    year: 2018,
+    priceMAD: 98000,
+    price: '98000 MAD',
+    mileage: '95000 km',
+    fuel: 'Diesel',
+    transmission: 'Manual',
+    city: 'Rabat',
+    description: 'Spacious Duster ideal for family use and light off-road. Recent maintenance and new tires.',
+    image: 'images/cars/car2.jpg',
+    img: 'images/cars/car2.jpg'
+  },
+  {
+    id: '3',
+    brand: 'Renault',
+    model: 'Clio 4',
+    year: 2017,
+    priceMAD: 82000,
+    price: '82000 MAD',
+    mileage: '88000 km',
+    fuel: 'Essence',
+    transmission: 'Automatic',
+    city: 'Tangier',
+    description: 'Compact and economical Clio 4, perfect for city driving with low running costs.',
+    image: 'images/cars/car3.jpg',
+    img: 'images/cars/car3.jpg'
+  },
+  {
+    id: '4',
+    brand: 'Hyundai',
+    model: 'Tucson',
+    year: 2019,
+    priceMAD: 165000,
+    price: '165000 MAD',
+    mileage: '60000 km',
+    fuel: 'Essence',
+    transmission: 'Automatic',
+    city: 'Marrakech',
+    description: 'Tucson in excellent condition, full service history and one owner for the past 3 years.',
+    image: 'images/cars/car4.jpg',
+    img: 'images/cars/car4.jpg'
+  },
+  {
+    id: '5',
+    brand: 'Peugeot',
+    model: '208',
+    year: 2018,
+    priceMAD: 88000,
+    price: '88000 MAD',
+    mileage: '70000 km',
+    fuel: 'Essence',
+    transmission: 'Manual',
+    city: 'Agadir',
+    description: 'Peugeot 208, comfortable city car with good fuel economy and low ownership costs.',
+    image: 'images/cars/car5.jpg',
+    img: 'images/cars/car5.jpg'
+  },
+  {
+    id: '6',
+    brand: 'Dacia',
+    model: 'Sandero',
+    year: 2019,
+    priceMAD: 63000,
+    price: '63000 MAD',
+    mileage: '54000 km',
+    fuel: 'Essence',
+    transmission: 'Manual',
+    city: 'Fes',
+    description: 'Reliable Sandero with economical running costs, ideal first car or daily commuter.',
+    image: 'images/cars/car6.jpg',
+    img: 'images/cars/car6.jpg'
+  },
+  {
+    id: '7',
+    brand: 'Ford',
+    model: 'Fiesta',
+    year: 2015,
+    priceMAD: 52000,
+    price: '52000 MAD',
+    mileage: '130000 km',
+    fuel: 'Essence',
+    transmission: 'Manual',
+    city: 'Casablanca',
+    description: 'Compact Ford Fiesta with regular servicing. Great for urban driving and small running costs.',
+    image: 'images/cars/car7.jpg',
+    img: 'images/cars/car7.jpg'
+  },
+  {
+    id: '8',
+    brand: 'Mercedes-Benz',
+    model: 'C-Class',
+    year: 2014,
+    priceMAD: 235000,
+    price: '235000 MAD',
+    mileage: '145000 km',
+    fuel: 'Diesel',
+    transmission: 'Automatic',
+    city: 'Rabat',
+    description: 'Luxury C-Class with premium interior, smooth ride, and well-maintained engine.',
+    image: 'images/cars/car8.jpg',
+    img: 'images/cars/car8.jpg'
+  },
+  {
+    id: '9',
+    brand: 'BMW',
+    model: '3 Series',
+    year: 2016,
+    priceMAD: 245000,
+    price: '245000 MAD',
+    mileage: '98000 km',
+    fuel: 'Diesel',
+    transmission: 'Automatic',
+    city: 'Tanger',
+    description: 'Sporty BMW 3 Series with excellent handling and a comfortable interior.',
+    image: 'images/cars/car9.jpg',
+    img: 'images/cars/car9.jpg'
+  },
+  {
+    id: '10',
+    brand: 'Audi',
+    model: 'A3',
+    year: 2017,
+    priceMAD: 210000,
+    price: '210000 MAD',
+    mileage: '85000 km',
+    fuel: 'Essence',
+    transmission: 'Automatic',
+    city: 'Marrakech',
+    description: 'Premium Audi A3 in great condition, comfortable and efficient for daily use.',
+    image: 'images/cars/car10.jpg',
+    img: 'images/cars/car10.jpg'
+  },
+  {
+    id: '11',
+    brand: 'Nissan',
+    model: 'Qashqai',
+    year: 2018,
+    priceMAD: 175000,
+    price: '175000 MAD',
+    mileage: '72000 km',
+    fuel: 'Diesel',
+    transmission: 'Automatic',
+    city: 'Agadir',
+    description: 'Popular crossover with comfortable seating and practical cargo space.',
+    image: 'images/cars/car11.jpg',
+    img: 'images/cars/car11.jpg'
+  },
+  {
+    id: '12',
+    brand: 'Fiat',
+    model: '500',
+    year: 2016,
+    priceMAD: 47000,
+    price: '47000 MAD',
+    mileage: '98000 km',
+    fuel: 'Essence',
+    transmission: 'Manual',
+    city: 'Casablanca',
+    description: 'Charming Fiat 500, compact and easy to park — great for city life.',
+    image: 'images/cars/car12.jpg',
+    img: 'images/cars/car12.jpg'
+  },
+  {
+    id: '13',
+    brand: 'Citroën',
+    model: 'C3',
+    year: 2019,
+    priceMAD: 79000,
+    price: '79000 MAD',
+    mileage: '42000 km',
+    fuel: 'Essence',
+    transmission: 'Manual',
+    city: 'Fes',
+    description: 'Economical Citroën C3 with low mileage and modern features.',
+    image: 'images/cars/car13.jpg',
+    img: 'images/cars/car13.jpg'
+  },
+  {
+    id: '14',
+    brand: 'Toyota',
+    model: 'Yaris',
+    year: 2018,
+    priceMAD: 92000,
+    price: '92000 MAD',
+    mileage: '51000 km',
+    fuel: 'Essence',
+    transmission: 'Automatic',
+    city: 'Meknes',
+    description: 'Reliable Toyota Yaris with excellent fuel economy and a clean service history.',
+    image: 'images/cars/car14.jpg',
+    img: 'images/cars/car14.jpg'
+  },
+  {
+    id: '15',
+    brand: 'Range Rover',
+    model: 'Evoque',
+    year: 2015,
+    priceMAD: 420000,
+    price: '420000 MAD',
+    mileage: '115000 km',
+    fuel: 'Diesel',
+    transmission: 'Automatic',
+    city: 'Rabat',
+    description: 'Stylish Range Rover Evoque with premium features and capable off-road performance.',
+    image: 'images/cars/car15.jpg',
+    img: 'images/cars/car15.jpg'
+  }
+];
