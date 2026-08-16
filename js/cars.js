@@ -25,7 +25,7 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Casablanca',
     description: 'Well-maintained Golf 7, serviced regularly. Good condition with original parts and a clean history.',
-    image: 'images/cars/car1.jpg',
+    image: 'images/cars/car1.webp',
     img: 'images/cars/car1.jpg'
   },
   {
@@ -40,7 +40,7 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Rabat',
     description: 'Spacious Duster ideal for family use and light off-road. Recent maintenance and new tires.',
-    image: 'images/cars/car2.jpg',
+    image: 'images/cars/car2.webp',
     img: 'images/cars/car2.jpg'
   },
   {
@@ -55,7 +55,7 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Tangier',
     description: 'Compact and economical Clio 4, perfect for city driving with low running costs.',
-    image: 'images/cars/car3.jpg',
+    image: 'images/cars/car3.webp',
     img: 'images/cars/car3.jpg'
   },
   {
@@ -70,7 +70,7 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Marrakech',
     description: 'Tucson in excellent condition, full service history and one owner for the past 3 years.',
-    image: 'images/cars/car4.jpg',
+    image: 'images/cars/car4.webp',
     img: 'images/cars/car4.jpg'
   },
   {
@@ -85,7 +85,7 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Agadir',
     description: 'Peugeot 208, comfortable city car with good fuel economy and low ownership costs.',
-    image: 'images/cars/car5.jpg',
+    image: 'images/cars/car5.webp',
     img: 'images/cars/car5.jpg'
   },
   {
@@ -100,7 +100,7 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Fes',
     description: 'Reliable Sandero with economical running costs, ideal first car or daily commuter.',
-    image: 'images/cars/car6.jpg',
+    image: 'images/cars/car6.webp',
     img: 'images/cars/car6.jpg'
   },
   {
@@ -115,8 +115,8 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Casablanca',
     description: 'Compact Ford Fiesta with regular servicing. Great for urban driving and small running costs.',
-    image: 'images/cars/car7.jpg',
-    img: 'images/cars/car7.jpg'
+    image: 'images/cars/car7.webp',
+    img: 'images/cars/car7.webp'
   },
   {
     id: '8',
@@ -130,8 +130,8 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Rabat',
     description: 'Luxury C-Class with premium interior, smooth ride, and well-maintained engine.',
-    image: 'images/cars/car8.jpg',
-    img: 'images/cars/car8.jpg'
+    image: 'images/cars/car8.webp',
+    img: 'images/cars/car8.webp'
   },
   {
     id: '9',
@@ -145,8 +145,8 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Tanger',
     description: 'Sporty BMW 3 Series with excellent handling and a comfortable interior.',
-    image: 'images/cars/car9.jpg',
-    img: 'images/cars/car9.jpg'
+    image: 'images/cars/car9.webp',
+    img: 'images/cars/car9.webp'
   },
   {
     id: '10',
@@ -160,8 +160,8 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Marrakech',
     description: 'Premium Audi A3 in great condition, comfortable and efficient for daily use.',
-    image: 'images/cars/car10.jpg',
-    img: 'images/cars/car10.jpg'
+    image: 'images/cars/car10.webp',
+    img: 'images/cars/car10.webp'
   },
   {
     id: '11',
@@ -175,8 +175,8 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Agadir',
     description: 'Popular crossover with comfortable seating and practical cargo space.',
-    image: 'images/cars/car11.jpg',
-    img: 'images/cars/car11.jpg'
+    image: 'images/cars/car11.webp',
+    img: 'images/cars/car11.webp'
   },
   {
     id: '12',
@@ -190,8 +190,8 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Casablanca',
     description: 'Charming Fiat 500, compact and easy to park — great for city life.',
-    image: 'images/cars/car12.jpg',
-    img: 'images/cars/car12.jpg'
+    image: 'images/cars/car12.webp',
+    img: 'images/cars/car12.webp'
   },
   {
     id: '13',
@@ -205,8 +205,8 @@ const CARS_DATA = [
     transmission: 'Manual',
     city: 'Fes',
     description: 'Economical Citroën C3 with low mileage and modern features.',
-    image: 'images/cars/car13.jpg',
-    img: 'images/cars/car13.jpg'
+    image: 'images/cars/car13.webp',
+    img: 'images/cars/car13.webp'
   },
   {
     id: '14',
@@ -220,8 +220,8 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Meknes',
     description: 'Reliable Toyota Yaris with excellent fuel economy and a clean service history.',
-    image: 'images/cars/car14.jpg',
-    img: 'images/cars/car14.jpg'
+    image: 'images/cars/car14.webp',
+    img: 'images/cars/car14.webp'
   },
   {
     id: '15',
@@ -235,7 +235,7 @@ const CARS_DATA = [
     transmission: 'Automatic',
     city: 'Rabat',
     description: 'Stylish Range Rover Evoque with premium features and capable off-road performance.',
-    image: 'images/cars/car15.jpg',
-    img: 'images/cars/car15.jpg'
+    image: 'images/cars/car15.webp',
+    img: 'images/cars/car15.webp'
   }
 ];
