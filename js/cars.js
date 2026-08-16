@@ -1,5 +1,5 @@
 /* Cars data for AutoMarket Maroc */
-const makeCarSvg = (label, background, foreground) => {
+const makeCarSvg = (label, background = '#1e293b', foreground = '#38bdf8') => {
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
       <rect width="800" height="480" fill="${background}"/>
@@ -26,7 +26,8 @@ const CARS_DATA = [
     city: 'Casablanca',
     description: 'Well-maintained Golf 7, serviced regularly. Good condition with original parts and a clean history.',
     image: 'images/cars/car1.webp',
-    img: 'images/cars/car1.jpg'
+    img: 'images/cars/car1.webp',
+    placeholder: makeCarSvg('Volkswagen Golf 7')
   },
   {
     id: '2',
@@ -41,7 +42,8 @@ const CARS_DATA = [
     city: 'Rabat',
     description: 'Spacious Duster ideal for family use and light off-road. Recent maintenance and new tires.',
     image: 'images/cars/car2.webp',
-    img: 'images/cars/car2.jpg'
+    img: 'images/cars/car2.webp',
+    placeholder: makeCarSvg('Dacia Duster')
   },
   {
     id: '3',
@@ -56,7 +58,8 @@ const CARS_DATA = [
     city: 'Tangier',
     description: 'Compact and economical Clio 4, perfect for city driving with low running costs.',
     image: 'images/cars/car3.webp',
-    img: 'images/cars/car3.jpg'
+    img: 'images/cars/car3.webp',
+    placeholder: makeCarSvg('Renault Clio 4')
   },
   {
     id: '4',
@@ -71,7 +74,8 @@ const CARS_DATA = [
     city: 'Marrakech',
     description: 'Tucson in excellent condition, full service history and one owner for the past 3 years.',
     image: 'images/cars/car4.webp',
-    img: 'images/cars/car4.jpg'
+    img: 'images/cars/car4.webp',
+    placeholder: makeCarSvg('Hyundai Tucson')
   },
   {
     id: '5',
@@ -86,7 +90,8 @@ const CARS_DATA = [
     city: 'Agadir',
     description: 'Peugeot 208, comfortable city car with good fuel economy and low ownership costs.',
     image: 'images/cars/car5.webp',
-    img: 'images/cars/car5.jpg'
+    img: 'images/cars/car5.webp',
+    placeholder: makeCarSvg('Peugeot 208')
   },
   {
     id: '6',
@@ -101,7 +106,8 @@ const CARS_DATA = [
     city: 'Fes',
     description: 'Reliable Sandero with economical running costs, ideal first car or daily commuter.',
     image: 'images/cars/car6.webp',
-    img: 'images/cars/car6.jpg'
+    img: 'images/cars/car6.webp',
+    placeholder: makeCarSvg('Dacia Sandero')
   },
   {
     id: '7',
@@ -116,7 +122,8 @@ const CARS_DATA = [
     city: 'Casablanca',
     description: 'Compact Ford Fiesta with regular servicing. Great for urban driving and small running costs.',
     image: 'images/cars/car7.webp',
-    img: 'images/cars/car7.webp'
+    img: 'images/cars/car7.webp',
+    placeholder: makeCarSvg('Ford Fiesta')
   },
   {
     id: '8',
@@ -131,7 +138,8 @@ const CARS_DATA = [
     city: 'Rabat',
     description: 'Luxury C-Class with premium interior, smooth ride, and well-maintained engine.',
     image: 'images/cars/car8.webp',
-    img: 'images/cars/car8.webp'
+    img: 'images/cars/car8.webp',
+    placeholder: makeCarSvg('Mercedes C-Class')
   },
   {
     id: '9',
@@ -146,7 +154,8 @@ const CARS_DATA = [
     city: 'Tanger',
     description: 'Sporty BMW 3 Series with excellent handling and a comfortable interior.',
     image: 'images/cars/car9.webp',
-    img: 'images/cars/car9.webp'
+    img: 'images/cars/car9.webp',
+    placeholder: makeCarSvg('BMW 3 Series')
   },
   {
     id: '10',
@@ -161,7 +170,8 @@ const CARS_DATA = [
     city: 'Marrakech',
     description: 'Premium Audi A3 in great condition, comfortable and efficient for daily use.',
     image: 'images/cars/car10.webp',
-    img: 'images/cars/car10.webp'
+    img: 'images/cars/car10.webp',
+    placeholder: makeCarSvg('Audi A3')
   },
   {
     id: '11',
@@ -176,7 +186,8 @@ const CARS_DATA = [
     city: 'Agadir',
     description: 'Popular crossover with comfortable seating and practical cargo space.',
     image: 'images/cars/car11.webp',
-    img: 'images/cars/car11.webp'
+    img: 'images/cars/car11.webp',
+    placeholder: makeCarSvg('Nissan Qashqai')
   },
   {
     id: '12',
@@ -191,7 +202,8 @@ const CARS_DATA = [
     city: 'Casablanca',
     description: 'Charming Fiat 500, compact and easy to park — great for city life.',
     image: 'images/cars/car12.webp',
-    img: 'images/cars/car12.webp'
+    img: 'images/cars/car12.webp',
+    placeholder: makeCarSvg('Fiat 500')
   },
   {
     id: '13',
@@ -206,7 +218,8 @@ const CARS_DATA = [
     city: 'Fes',
     description: 'Economical Citroën C3 with low mileage and modern features.',
     image: 'images/cars/car13.webp',
-    img: 'images/cars/car13.webp'
+    img: 'images/cars/car13.webp',
+    placeholder: makeCarSvg('Citroën C3')
   },
   {
     id: '14',
@@ -221,7 +234,8 @@ const CARS_DATA = [
     city: 'Meknes',
     description: 'Reliable Toyota Yaris with excellent fuel economy and a clean service history.',
     image: 'images/cars/car14.webp',
-    img: 'images/cars/car14.webp'
+    img: 'images/cars/car14.webp',
+    placeholder: makeCarSvg('Toyota Yaris')
   },
   {
     id: '15',
@@ -236,6 +250,7 @@ const CARS_DATA = [
     city: 'Rabat',
     description: 'Stylish Range Rover Evoque with premium features and capable off-road performance.',
     image: 'images/cars/car15.webp',
-    img: 'images/cars/car15.webp'
+    img: 'images/cars/car15.webp',
+    placeholder: makeCarSvg('Range Rover Evoque')
   }
 ];
