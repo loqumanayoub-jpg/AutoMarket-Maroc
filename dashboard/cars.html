@@ -51,6 +51,10 @@
                 </form>
             </section>
 
+            <div class="cars-actions">
+                <button id="addCarBtn" class="btn btn-primary">إضافة سيارة</button>
+            </div>
+
             <table class="data-table">
                 <thead>
                     <tr>
@@ -66,6 +70,99 @@
                     <!-- Cars rendered here -->
                 </tbody>
             </table>
+
+            <!-- Add Car Modal -->
+            <div id="addCarModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <h3>إضافة سيارة جديدة</h3>
+                    <form id="addCarForm">
+                        <div class="form-row">
+                            <label>العلامة (brand) *</label>
+                            <input type="text" id="fieldBrand" required />
+                        </div>
+                        <div class="form-row">
+                            <label>النموذج (model) *</label>
+                            <input type="text" id="fieldModel" required />
+                        </div>
+                        <div class="form-row">
+                            <label>السنة (year) *</label>
+                            <input type="number" id="fieldYear" required />
+                        </div>
+                        <div class="form-row">
+                            <label>الثمن (price) *</label>
+                            <input type="number" id="fieldPrice" step="0.01" required />
+                        </div>
+                        <div class="form-row">
+                            <label>المسافة (mileage)</label>
+                            <input type="number" id="fieldMileage" />
+                        </div>
+                        <div class="form-row">
+                            <label>الوقود (fuel) *</label>
+                            <input type="text" id="fieldFuel" required />
+                        </div>
+                        <div class="form-row">
+                            <label>نقل الحركة (transmission) *</label>
+                            <input type="text" id="fieldTransmission" required />
+                        </div>
+                        <div class="form-row">
+                            <label>المدينة (city) *</label>
+                            <input type="text" id="fieldCity" required />
+                        </div>
+                        <div class="form-row">
+                            <label>قوة الحصان (horsepower)</label>
+                            <input type="number" id="fieldHorsepower" />
+                        </div>
+                        <div class="form-row">
+                            <label>الأبواب (doors)</label>
+                            <input type="number" id="fieldDoors" />
+                        </div>
+                        <div class="form-row">
+                            <label>التأمين (vignette)</label>
+                            <input type="number" id="fieldVignette" step="0.01" />
+                        </div>
+                        <div class="form-row">
+                            <label>الوصف</label>
+                            <textarea id="fieldDescription"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <label>حالة (status)</label>
+                            <select id="fieldStatus">
+                                <option value="available">available</option>
+                                <option value="sold">sold</option>
+                                <option value="unlisted">unlisted</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label>inspection_status</label>
+                            <select id="fieldInspection">
+                                <option value="pending">pending</option>
+                                <option value="verified">verified</option>
+                                <option value="rejected">rejected</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label>guarantee_months</label>
+                            <input type="number" id="fieldGuarantee" />
+                        </div>
+
+                        <div class="form-row">
+                            <label>الصورة الرئيسية (main_image)</label>
+                            <input type="file" id="fieldMainImage" accept="image/*" />
+                        </div>
+                        <div class="form-row">
+                            <label>معرض الصور (gallery) - يمكنك اختيار عدة صور</label>
+                            <input type="file" id="fieldGallery" accept="image/*" multiple />
+                        </div>
+
+                        <div id="addCarError" class="alert alert-danger" style="display:none;"></div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="addCarSubmit" class="btn btn-primary">حفظ</button>
+                            <button type="button" id="addCarCancel" class="btn">إلغاء</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
     </div>
 
