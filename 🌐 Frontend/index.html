@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AutoMarket Maroc | Voitures d'occasion</title>
+
+  <meta
+    name="description"
+    content="AutoMarket Maroc - Découvrez nos voitures d'occasion vérifiées au meilleur prix."
+  >
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a href="index.html" class="brand">
+        <img
+          id="logoImg"
+          src="images/logo/logo.png"
+          alt="AutoMarket Maroc"
+        >
+
+        <div>
+          <strong id="dealerName">AutoMarket Maroc</strong>
+          <span>Votre confiance, notre priorité</span>
+        </div>
+      </a>
+
+      <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        type="button"
+        aria-label="Ouvrir le menu"
+      >
+        ☰
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+
+        <a href="#home">Accueil</a>
+        <a href="#cars">Voitures</a>
+        <a href="#features">Services</a>
+        <a href="#sell">Vendre</a>
+        <a href="#reviews">Avis</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+
+        <a
+          id="whatsappHeader"
+          class="nav-whatsapp"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>💬</span>
+          WhatsApp
+        </a>
+
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <main>
+
+    <section id="home" class="hero">
+
+      <div class="hero-bg" id="heroBg"></div>
+
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+
+        <div class="hero-text">
+
+          <span class="hero-badge">
+            ✓ Véhicules vérifiés au Maroc
+          </span>
+
+          <h1>
+            Trouvez la voiture
+            <span>qui vous correspond.</span>
+          </h1>
+
+          <p>
+            Une sélection de voitures d'occasion vérifiées,
+            transparentes et prêtes à prendre la route.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a href="#cars" class="btn btn-primary">
+              Voir les voitures
+            </a>
+
+            <a
+              id="heroWhatsapp"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-whatsapp"
+            >
+              💬 Contacter WhatsApp
+            </a>
+
+          </div>
+
+          <div class="hero-trust">
+
+            <div>
+              <strong>✓</strong>
+              <span>Véhicules inspectés</span>
+            </div>
+
+            <div>
+              <strong>✓</strong>
+              <span>Prix transparents</span>
+            </div>
+
+            <div>
+              <strong>✓</strong>
+              <span>Accompagnement</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <section class="search-section container">
+
+      <div class="search-card">
+
+        <div class="search-heading">
+          <span>RECHERCHE</span>
+
+          <h2>
+            Trouvez votre prochaine voiture
+          </h2>
+
+          <p>
+            Filtrez notre sélection selon vos besoins.
+          </p>
+        </div>
+
+        <form id="searchForm" class="search-grid">
+
+          <div class="input-group">
+            <label for="brandFilter">Marque</label>
+
+            <select id="brandFilter">
+              <option value="">Toutes les marques</option>
+            </select>
+          </div>
+
+
+          <div class="input-group">
+            <label for="fuelFilter">Carburant</label>
+
+            <select id="fuelFilter">
+              <option value="">Tous</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Essence">Essence</option>
+              <option value="Hybride">Hybride</option>
+            </select>
+          </div>
+
+
+          <div class="input-group">
+            <label for="transFilter">Boîte</label>
+
+            <select id="transFilter">
+              <option value="">Toutes</option>
+              <option value="Manuelle">Manuelle</option>
+              <option value="Automatique">Automatique</option>
+            </select>
+          </div>
+
+
+          <div class="input-group">
+            <label for="cityFilter">Ville</label>
+
+            <select id="cityFilter">
+              <option value="">Toutes les villes</option>
+            </select>
+          </div>
+
+
+          <div class="input-group">
+            <label for="priceFilter">Prix maximum</label>
+
+            <input
+              id="priceFilter"
+              type="number"
+              min="0"
+              placeholder="Ex: 150000"
+            >
+          </div>
+
+
+          <div class="search-actions">
+
+            <button
+              id="searchBtn"
+              type="submit"
+              class="btn btn-primary"
+            >
+              🔎 Rechercher
+            </button>
+
+            <button
+              id="resetBtn"
+              type="button"
+              class="btn btn-light"
+            >
+              Réinitialiser
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= CARS ================= -->
+
+    <section id="cars" class="section container">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow">NOTRE SÉLECTION</span>
+
+          <h2>Voitures disponibles</h2>
+
+          <p>
+            Découvrez nos véhicules sélectionnés et inspectés.
+          </p>
+        </div>
+
+        <div id="resultsCount" class="results-count">
+          0 véhicules
+        </div>
+
+      </div>
+
+
+      <div
+        id="carsGrid"
+        class="cars-grid"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats-section">
+
+      <div class="container stats-grid">
+
+        <div class="stat-item">
+          <strong data-target="500">0</strong>
+          <span>Véhicules vendus*</span>
+        </div>
+
+        <div class="stat-item">
+          <strong data-target="98">0%</strong>
+          <span>Satisfaction*</span>
+        </div>
+
+        <div class="stat-item">
+          <strong data-target="12">0</strong>
+          <span>Villes couvertes*</span>
+        </div>
+
+        <div class="stat-item">
+          <strong data-target="7">0</strong>
+          <span>Jours / semaine</span>
+        </div>
+
+      </div>
+
+      <p class="demo-note">
+        * Statistiques de démonstration à remplacer par vos données réelles.
+      </p>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section id="features" class="section container">
+
+      <div class="section-heading centered">
+
+        <span class="eyebrow">POURQUOI NOUS</span>
+
+        <h2>Une expérience automobile différente</h2>
+
+        <p>
+          Nous voulons rendre l'achat d'une voiture simple,
+          transparent et rassurant.
+        </p>
+
+      </div>
+
+
+      <div class="features-grid">
+
+        <article class="feature-card">
+
+          <div class="feature-icon">🛡️</div>
+
+          <h3>Véhicules inspectés</h3>
+
+          <p>
+            Chaque véhicule peut être contrôlé avant sa mise en vente.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">💎</div>
+
+          <h3>Prix transparents</h3>
+
+          <p>
+            Des prix affichés clairement, sans frais cachés.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">🚚</div>
+
+          <h3>Livraison au Maroc</h3>
+
+          <p>
+            Nous pouvons organiser la livraison dans plusieurs villes.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">🤝</div>
+
+          <h3>Accompagnement</h3>
+
+          <p>
+            Notre équipe vous accompagne avant et après votre achat.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= SELL ================= -->
+
+    <section id="sell" class="sell-section">
+
+      <div class="container">
+
+        <div class="sell-card">
+
+          <div class="sell-intro">
+
+            <span class="eyebrow">VENDEZ VOTRE VOITURE</span>
+
+            <h2>
+              Votre voiture mérite
+              le meilleur prix.
+            </h2>
+
+            <p>
+              Envoyez-nous les informations de votre véhicule
+              et notre équipe vous contactera.
+            </p>
+
+            <div class="sell-steps-preview">
+
+              <span>01 Informations</span>
+              <span>02 État</span>
+              <span>03 Photos</span>
+
+            </div>
+
+          </div>
+
+
+          <form id="sellForm" class="sell-form">
+
+            <!-- STEP 1 -->
+
+            <div class="wizard-step active" data-step="1">
+
+              <div class="wizard-header">
+                <span>Étape 1 / 3</span>
+                <h3>Informations générales</h3>
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="input-group">
+                  <label for="sellerName">
+                    Votre nom
+                  </label>
+
+                  <input
+                    id="sellerName"
+                    name="sellerName"
+                    type="text"
+                    required
+                    placeholder="Votre nom"
+                  >
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellerPhone">
+                    Téléphone
+                  </label>
+
+                  <input
+                    id="sellerPhone"
+                    name="sellerPhone"
+                    type="tel"
+                    required
+                    placeholder="06XXXXXXXX"
+                  >
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellBrand">
+                    Marque
+                  </label>
+
+                  <input
+                    id="sellBrand"
+                    name="sellBrand"
+                    type="text"
+                    required
+                    placeholder="Ex: Dacia"
+                  >
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellModel">
+                    Modèle
+                  </label>
+
+                  <input
+                    id="sellModel"
+                    name="sellModel"
+                    type="text"
+                    required
+                    placeholder="Ex: Duster"
+                  >
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellYear">
+                    Année
+                  </label>
+
+                  <input
+                    id="sellYear"
+                    name="sellYear"
+                    type="number"
+                    min="1950"
+                    max="2030"
+                    required
+                    placeholder="2020"
+                  >
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellPrice">
+                    Prix souhaité (MAD)
+                  </label>
+
+                  <input
+                    id="sellPrice"
+                    name="sellPrice"
+                    type="number"
+                    min="0"
+                    required
+                    placeholder="150000"
+                  >
+                </div>
+
+              </div>
+
+
+              <div class="wizard-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-primary next-step"
+                >
+                  Continuer →
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+
+            <div class="wizard-step" data-step="2">
+
+              <div class="wizard-header">
+                <span>Étape 2 / 3</span>
+                <h3>État et caractéristiques</h3>
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="input-group">
+                  <label for="sellFuel">
+                    Carburant
+                  </label>
+
+                  <select id="sellFuel" name="sellFuel">
+                    <option value="Diesel">Diesel</option>
+                    <option value="Essence">Essence</option>
+                    <option value="Hybride">Hybride</option>
+                  </select>
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellTransmission">
+                    Boîte
+                  </label>
+
+                  <select
+                    id="sellTransmission"
+                    name="sellTransmission"
+                  >
+                    <option value="Manuelle">Manuelle</option>
+                    <option value="Automatique">
+                      Automatique
+                    </option>
+                  </select>
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellMileage">
+                    Kilométrage
+                  </label>
+
+                  <input
+                    id="sellMileage"
+                    name="sellMileage"
+                    type="number"
+                    min="0"
+                    required
+                    placeholder="85000"
+                  >
+                </div>
+
+
+                <div class="input-group">
+                  <label for="sellCity">
+                    Ville
+                  </label>
+
+                  <input
+                    id="sellCity"
+                    name="sellCity"
+                    type="text"
+                    required
+                    placeholder="Casablanca"
+                  >
+                </div>
+
+              </div>
+
+
+              <div class="input-group">
+
+                <label for="sellDescription">
+                  Décrivez votre voiture
+                </label>
+
+                <textarea
+                  id="sellDescription"
+                  name="sellDescription"
+                  rows="5"
+                  placeholder="État général, entretien, options..."
+                ></textarea>
+
+              </div>
+
+
+              <div class="wizard-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-light prev-step"
+                >
+                  ← Retour
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-primary next-step"
+                >
+                  Continuer →
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+
+            <div class="wizard-step" data-step="3">
+
+              <div class="wizard-header">
+                <span>Étape 3 / 3</span>
+                <h3>Photos du véhicule</h3>
+              </div>
+
+
+              <label class="upload-box" for="sellImages">
+
+                <span class="upload-icon">📸</span>
+
+                <strong>
+                  Ajoutez les photos de votre voiture
+                </strong>
+
+                <small>
+                  JPG, PNG ou WEBP
+                </small>
+
+                <input
+                  id="sellImages"
+                  name="sellImages"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                >
+
+              </label>
+
+
+              <div
+                id="imagePreview"
+                class="image-preview"
+              ></div>
+
+
+              <div class="wizard-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-light prev-step"
+                >
+                  ← Retour
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn btn-whatsapp"
+                >
+                  💬 Envoyer via WhatsApp
+                </button>
+
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= REVIEWS ================= -->
+
+    <section id="reviews" class="section container">
+
+      <div class="section-heading centered">
+
+        <span class="eyebrow">AVIS CLIENTS</span>
+
+        <h2>Ce que disent nos clients</h2>
+
+        <p>
+          Témoignages de démonstration pour la présentation du site.
+        </p>
+
+      </div>
+
+
+      <div class="reviews-grid">
+
+        <article class="review-card">
+
+          <div class="stars">★★★★★</div>
+
+          <p>
+            "Très bonne expérience. La voiture correspondait
+            parfaitement aux informations présentées."
+          </p>
+
+          <strong>Client Demo</strong>
+          <span>Casablanca</span>
+
+        </article>
+
+
+        <article class="review-card">
+
+          <div class="stars">★★★★★</div>
+
+          <p>
+            "Une équipe professionnelle et une communication
+            rapide."
+          </p>
+
+          <strong>Client Demo</strong>
+          <span>Rabat</span>
+
+        </article>
+
+
+        <article class="review-card">
+
+          <div class="stars">★★★★★</div>
+
+          <p>
+            "Le processus d'achat était simple et transparent."
+          </p>
+
+          <strong>Client Demo</strong>
+          <span>Marrakech</span>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= FAQ ================= -->
+
+    <section id="faq" class="section faq-section">
+
+      <div class="container">
+
+        <div class="section-heading centered">
+
+          <span class="eyebrow">FAQ</span>
+
+          <h2>Questions fréquentes</h2>
+
+        </div>
+
+
+        <div class="faq-list">
+
+          <details>
+            <summary>
+              Comment acheter une voiture ?
+              <span>+</span>
+            </summary>
+
+            <p>
+              Choisissez une voiture, consultez ses informations
+              puis contactez-nous via WhatsApp ou téléphone.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>
+              Les voitures sont-elles inspectées ?
+              <span>+</span>
+            </summary>
+
+            <p>
+              Les véhicules présentés comme vérifiés sont inspectés
+              selon le processus de démonstration du site.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>
+              Proposez-vous une garantie ?
+              <span>+</span>
+            </summary>
+
+            <p>
+              La garantie dépend du véhicule. Consultez la fiche
+              de chaque voiture pour connaître les conditions.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>
+              Quels documents sont nécessaires ?
+              <span>+</span>
+            </summary>
+
+            <p>
+              Les documents nécessaires dépendent de la transaction.
+              Notre équipe vous accompagne dans les démarches.
+            </p>
+          </details>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <section id="contact" class="section container">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow">CONTACT</span>
+          <h2>Venez nous rencontrer</h2>
+        </div>
+
+      </div>
+
+
+      <div class="contact-card">
+
+        <div class="contact-info">
+
+          <div class="contact-item">
+            <span>📍</span>
+
+            <div>
+              <strong>Adresse</strong>
+              <p id="addressText">
+                123 Avenue Mohammed V, Casablanca
+              </p>
+            </div>
+          </div>
+
+
+          <div class="contact-item">
+            <span>📞</span>
+
+            <div>
+              <strong>Téléphone</strong>
+
+              <p>
+                <a id="phoneText" href="#">
+                  +212 645 823 515
+                </a>
+              </p>
+            </div>
+          </div>
+
+
+          <div class="contact-item">
+            <span>✉️</span>
+
+            <div>
+              <strong>Email</strong>
+
+              <p>
+                <a id="emailText" href="#">
+                  info@automarket.ma
+                </a>
+              </p>
+            </div>
+          </div>
+
+
+          <a
+            id="contactWhatsapp"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-whatsapp contact-wa"
+          >
+            💬 Nous contacter sur WhatsApp
+          </a>
+
+        </div>
+
+
+        <div class="map-box">
+
+          <iframe
+            id="mapEmbed"
+            title="AutoMarket Maroc - Casablanca"
+            src="https://www.google.com/maps?q=Casablanca,Morocco&output=embed"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div>
+
+        <div class="footer-brand">
+          <img
+            src="images/logo/logo.png"
+            alt="AutoMarket Maroc"
+          >
+
+          <strong>AutoMarket Maroc</strong>
+        </div>
+
+        <p>
+          Votre partenaire pour acheter et vendre
+          des voitures d'occasion au Maroc.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <h3>Navigation</h3>
+
+        <a href="#home">Accueil</a>
+        <a href="#cars">Voitures</a>
+        <a href="#sell">Vendre</a>
+        <a href="#reviews">Avis</a>
+        <a href="#faq">FAQ</a>
+
+      </div>
+
+
+      <div>
+
+        <h3>Réseaux</h3>
+
+        <a id="facebookLink" href="#" target="_blank">
+          Facebook
+        </a>
+
+        <a id="instagramLink" href="#" target="_blank">
+          Instagram
+        </a>
+
+        <a id="footerWhatsapp" href="#" target="_blank">
+          WhatsApp
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <p>
+        © <span id="year"></span>
+        AutoMarket Maroc.
+        Tous droits réservés.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <!-- FLOATING WHATSAPP -->
+
+  <a
+    id="floatingWhatsapp"
+    href="#"
+    target="_blank"
+    rel="noopener"
+    class="floating-whatsapp"
+    aria-label="Contacter AutoMarket Maroc sur WhatsApp"
+  >
+    💬
+  </a>
+
+
+<script src="js/config.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/cars.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
