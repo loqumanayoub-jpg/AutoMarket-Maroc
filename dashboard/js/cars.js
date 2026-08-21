@@ -19,23 +19,84 @@ document.addEventListener('DOMContentLoaded', async () => {
             refreshBtn.disabled = true;
             refreshBtn.textContent = 'جاري التحديث...';
             try {
-                await fetchAndRenderCars(tableBody);
+                const filters = readSearchFilters();
+                await fetchAndRenderCars(tableBody, filters);
             } finally {
                 refreshBtn.disabled = false;
                 refreshBtn.textContent = 'تحديث';
             }
         });
     }
+
+    // Wire up search form
+    const searchForm = document.getElementById('searchForm');
+    const searchBtn = document.getElementById('searchBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    if (searchForm) {
+        // on submit
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const filters = readSearchFilters();
+            searchBtn.disabled = true;
+            searchBtn.textContent = 'جارٍ البحث...';
+            try {
+                await fetchAndRenderCars(tableBody, filters);
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.textContent = 'بحث';
+            }
+        });
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('searchBrand').value = '';
+            document.getElementById('searchModel').value = '';
+            document.getElementById('searchCity').value = '';
+            // reload full list
+            fetchAndRenderCars(tableBody);
+        });
+    }
+
+    // Debounced live search on inputs
+    const inputs = ['searchBrand','searchModel','searchCity'].map(id => document.getElementById(id)).filter(Boolean);
+    if (inputs.length) {
+        let debounceTimer = null;
+        inputs.forEach(inp => {
+            inp.addEventListener('input', () => {
+                if (debounceTimer) clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(async () => {
+                    const filters = readSearchFilters();
+                    await fetchAndRenderCars(tableBody, filters);
+                }, 400);
+            });
+        });
+    }
 });
 
-async function fetchAndRenderCars(container) {
+async function fetchAndRenderCars(container, filters = {}) {
     showLoadingState(container);
 
     try {
-        const { data: cars, error } = await window.supabase
+        let query = window.supabase
             .from('cars')
             .select('*')
             .order('created_at', { ascending: false });
+
+        // Apply filters (brand, model, city) using case-insensitive partial matches
+        if (filters.brand) {
+            query = query.ilike('brand', `%${filters.brand}%`);
+        }
+        if (filters.model) {
+            query = query.ilike('model', `%${filters.model}%`);
+        }
+        if (filters.city) {
+            query = query.ilike('city', `%${filters.city}%`);
+        }
+
+        const { data: cars, error } = await query;
 
         if (error) {
             console.error('Supabase Query Error:', error.message);
@@ -85,14 +146,24 @@ function renderCarsTable(container, cars) {
                 <td>${car.price ? Number(car.price).toLocaleString() : 0} MAD</td>
                 <td><span class="badge">${escapeHtml(car.status || 'available')}</span></td>
                 <td>
-                    <button class="btn btn-sm" disabled title="غير متاح حالياً">تعديل</button>
-                    <button class="btn btn-sm btn-danger" disabled title="غير متاح حالياً">حذف</button>
+                    <button class="btn btn-sm edit-btn" data-id="${escapeHtml(String(car.id))}">تعديل</button>
+                    <button class="btn btn-sm btn-danger delete-btn" data-id="${escapeHtml(String(car.id))}">حذف</button>
                 </td>
             </tr>
         `;
     }).join('');
 
     container.innerHTML = rowsHtml;
+
+    // Attach handlers (currently disabled behavior will be implemented in edit/delete phases)
+    container.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('تحرير السيارة غير مفعّل بعد.');
+    }));
+    container.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('حذف السيارة غير مفعّل بعد.');
+    }));
 }
 
 function escapeHtml(str) {
