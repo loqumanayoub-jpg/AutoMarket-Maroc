@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Debounced live search on inputs
-    const inputs = ['searchBrand','searchModel','searchCity'].map(id => document.getElementById(id)).filter(Boolean);
+    const inputs = ['searchBrand','searchModel','searchCity','filterStatus','filterFuel','filterTransmission']
+        .map(id => document.getElementById(id)).filter(Boolean);
     if (inputs.length) {
         let debounceTimer = null;
         inputs.forEach(inp => {
@@ -94,6 +95,17 @@ async function fetchAndRenderCars(container, filters = {}) {
         }
         if (filters.city) {
             query = query.ilike('city', `%${filters.city}%`);
+        }
+
+        // Apply exact-match filters for status, fuel, transmission when provided
+        if (filters.status) {
+            query = query.eq('status', filters.status);
+        }
+        if (filters.fuel) {
+            query = query.eq('fuel', filters.fuel);
+        }
+        if (filters.transmission) {
+            query = query.eq('transmission', filters.transmission);
         }
 
         const { data: cars, error } = await query;
