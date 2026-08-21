@@ -906,6 +906,43 @@ ${formData.get("sellDescription")}
         `.trim();
 
 
+        // Save submission to Supabase messages table (non-blocking)
+        try {
+          const payload = {
+            name: formData.get("sellerName"),
+            phone: formData.get("sellerPhone"),
+            brand: formData.get("sellBrand"),
+            model: formData.get("sellModel"),
+            year: parseInt(formData.get("sellYear")) || null,
+            price: parseFloat(formData.get("sellPrice")) || null,
+            fuel: formData.get("sellFuel"),
+            transmission: formData.get("sellTransmission"),
+            mileage: parseInt(formData.get("sellMileage")) || null,
+            city: formData.get("sellCity"),
+            description: formData.get("sellDescription"),
+            created_at: new Date().toISOString()
+          };
+
+          fetch(`${SUPABASE_URL}/rest/v1/messages`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+              Prefer: 'return=representation'
+            },
+            body: JSON.stringify(payload)
+          }).then(async res => {
+            if (!res.ok) {
+              console.error('Failed to save sell submission to Supabase', res.status, await res.text());
+            } else {
+              console.log('Sell submission saved to Supabase');
+            }
+          }).catch(err => console.error('Error saving sell submission to Supabase', err));
+        } catch (err) {
+          console.error('Error preparing sell submission', err);
+        }
+
         window.open(
           whatsappLink(message),
           "_blank"
