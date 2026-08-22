@@ -25,6 +25,54 @@
       <p>Loading dashboard overview...</p>
     </section>
 
+    <script>
+      // Small dashboard overview loader: queries simple counts and shows a brief summary.
+      document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('dashboardContent');
+        if (!container) return;
+
+        if (!window.supabase || typeof window.supabase.from !== 'function') {
+          container.innerHTML = '<p style="color:crimson">Supabase client not initialized. Please reload the page.</p>';
+          return;
+        }
+
+        try {
+          // total cars
+          const totalRes = await window.supabase.from('cars').select('id', { count: 'exact' }).limit(1);
+          if (totalRes.error) throw totalRes.error;
+          const total = totalRes.count || 0;
+
+          // available cars
+          const availRes = await window.supabase.from('cars').select('id', { count: 'exact' }).eq('status','available').limit(1);
+          if (availRes.error) throw availRes.error;
+          const available = availRes.count || 0;
+
+          container.innerHTML = `
+            <div class="dashboard-overview" style="display:flex; gap:12px; flex-wrap:wrap; align-items:stretch;">
+              <div style="background:white; padding:14px; border-radius:10px; box-shadow: var(--shadow); min-width:160px;">
+                <div style="font-size:13px; color:var(--muted)">Total cars</div>
+                <div style="font-size:20px; font-weight:700">${total}</div>
+              </div>
+              <div style="background:white; padding:14px; border-radius:10px; box-shadow: var(--shadow); min-width:160px;">
+                <div style="font-size:13px; color:var(--muted)">Available</div>
+                <div style="font-size:20px; font-weight:700; color:var(--primary)">${available}</div>
+              </div>
+              <div style="flex:1 1 300px; background:white; padding:14px; border-radius:10px; box-shadow: var(--shadow);">
+                <div style="font-size:13px; color:var(--muted)">Quick actions</div>
+                <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                  <a href="cars.html" class="btn btn-primary">Manage Cars</a>
+                  <a href="messages.html" class="btn btn-light">Messages</a>
+                </div>
+              </div>
+            </div>
+          `;
+        } catch (err) {
+          console.error('Dashboard overview load failed:', err);
+          container.innerHTML = '<p style="color:crimson">Failed to load dashboard overview. Check console for details.</p>';
+        }
+      });
+    </script>
+
   </main>
 
   <script>
