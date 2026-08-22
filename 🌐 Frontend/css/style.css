@@ -397,6 +397,101 @@ textarea {
 
 .search-card {
   background: white;
+}
+
+/* ================= DASHBOARD LAYOUT (small additions) ================= */
+.dashboard-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  background: var(--bg);
+}
+
+.main-content {
+  flex: 1 1 auto;
+  padding: 28px 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cars-controls .search-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.search-form input,
+.search-form select {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+}
+
+.btn-sm { padding: 6px 10px; font-size: 13px; border-radius: 8px; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.data-table thead th {
+  text-align: right;
+  padding: 12px 14px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  background: #fbfdff;
+}
+
+.data-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* RTL adjustments for dashboard pages */
+html[dir="rtl"] .main-content,
+html[dir="rtl"] .content-header {
+  direction: rtl;
+}
+
+@media (max-width: 800px) {
+  .search-form { flex-direction: column; align-items: stretch; }
+  .header-actions { flex-direction: column; gap: 6px; }
+  .data-table thead { display: none; }
+  .data-table tbody td { display: block; width: 100%; }
+}
+
 
   padding: 27px;
 
