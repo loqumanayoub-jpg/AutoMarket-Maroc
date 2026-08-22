@@ -167,13 +167,18 @@ function renderCarsTable(container, cars) {
 
     container.innerHTML = rowsHtml;
 
-    // Attach handlers (currently disabled behavior will be implemented in edit/delete phases)
-    container.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', (e) => {
+    // Attach handlers
+    container.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', async (e) => {
         e.preventDefault();
-            showToast('تحرير السيارة غير مفعّل بعد.', 'info');
+            const carId = Number(b.dataset.id);
+            if (!carId) {
+                showToast('تعذر تحديد السيارة.', 'error');
+                return;
+            }
+            await openEditCarModal(carId);
     }));
     container.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', (e) => {
-        e.preventDefault();
+            e.preventDefault();
             showToast('حذف السيارة غير مفعّل بعد.', 'info');
     }));
 }
@@ -216,6 +221,33 @@ function showToast(message, type = 'info', timeout = 4000) {
     }
 }
 
+function setModalMode(mode, carData = null) {
+    const addCarForm = document.getElementById('addCarForm');
+    const addCarTitle = document.getElementById('addCarTitle');
+    const addCarSubmit = document.getElementById('addCarSubmit');
+    const addCarError = document.getElementById('addCarError');
+    if (!addCarForm) return;
+
+    const isEdit = mode === 'edit';
+    addCarForm.dataset.mode = mode;
+    addCarForm.dataset.carId = carData ? String(carData.id) : '';
+    if (addCarTitle) {
+        addCarTitle.textContent = isEdit ? 'تعديل السيارة' : 'إضافة سيارة جديدة';
+    }
+    if (addCarSubmit) {
+        addCarSubmit.textContent = isEdit ? 'حفظ التغييرات' : 'حفظ';
+    }
+    if (addCarError) {
+        addCarError.style.display = 'none';
+        addCarError.textContent = '';
+    }
+    if (isEdit && carData) {
+        fillFormFromCar(carData);
+    } else {
+        addCarForm.reset();
+    }
+}
+
 // ---------- Add Car Modal & Form Handling ----------
 (function registerAddCarHandlers(){
     // Wait for DOM ready; this IIFE runs after file load but ensure elements exist
@@ -232,8 +264,17 @@ function showToast(message, type = 'info', timeout = 4000) {
         function showModal() { addCarModal.style.display = 'block'; }
         function hideModal() { addCarModal.style.display = 'none'; }
 
-        addCarBtn.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
-        addCarCancel.addEventListener('click', (e) => { e.preventDefault(); hideModal(); });
+        addCarBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            setModalMode('add');
+            showModal();
+        });
+        addCarCancel.addEventListener('click', (e) => {
+            e.preventDefault();
+            addCarForm.reset();
+            setModalMode('add');
+            hideModal();
+        });
 
         addCarForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -244,105 +285,191 @@ function showToast(message, type = 'info', timeout = 4000) {
             addCarSubmit.disabled = true;
             addCarSubmit.textContent = 'جارٍ الحفظ...';
 
+            const isEditMode = addCarForm.dataset.mode === 'edit';
+            const carId = Number(addCarForm.dataset.carId || 0);
+
             try {
-                // Collect values
-                const brand = (document.getElementById('fieldBrand') || {}).value?.trim();
-                const model = (document.getElementById('fieldModel') || {}).value?.trim();
-                const year = parseInt((document.getElementById('fieldYear') || {}).value) || null;
-                const priceRaw = (document.getElementById('fieldPrice') || {}).value;
-                const price = priceRaw !== undefined && priceRaw !== '' ? priceRaw : null; // numeric as string
-                const mileage = parseInt((document.getElementById('fieldMileage') || {}).value) || null;
-                const fuel = (document.getElementById('fieldFuel') || {}).value?.trim() || null;
-                const transmission = (document.getElementById('fieldTransmission') || {}).value?.trim() || null;
-                const city = (document.getElementById('fieldCity') || {}).value?.trim() || null;
-                const horsepower = parseInt((document.getElementById('fieldHorsepower') || {}).value) || null;
-                const doors = parseInt((document.getElementById('fieldDoors') || {}).value) || null;
-                const vignetteRaw = (document.getElementById('fieldVignette') || {}).value;
-                const vignette = vignetteRaw !== undefined && vignetteRaw !== '' ? vignetteRaw : null;
-                const description = (document.getElementById('fieldDescription') || {}).value?.trim() || null;
-                const status = (document.getElementById('fieldStatus') || {}).value || null;
-                const inspection_status = (document.getElementById('fieldInspection') || {}).value || null;
-                const guarantee_months = parseInt((document.getElementById('fieldGuarantee') || {}).value) || 0;
+                const payload = await buildCarPayloadFromForm();
 
-                // Basic validation for required fields
-                if (!brand || !model || !year || !price || !fuel || !transmission || !city) {
-                    throw new Error('يرجى ملء الحقول المطلوبة: العلامة، النموذج، السنة، الثمن، الوقود، نقل الحركة، المدينة.');
-                }
-
-                // Upload main image if provided
-                const mainInput = document.getElementById('fieldMainImage');
-                let main_image_url = null;
-                if (mainInput && mainInput.files && mainInput.files.length > 0) {
-                    const mainFile = mainInput.files[0];
-                    main_image_url = await uploadFileToStorage(mainFile);
-                }
-
-                // Upload gallery images if provided
-                const galleryInput = document.getElementById('fieldGallery');
-                let galleryUrls = [];
-                if (galleryInput && galleryInput.files && galleryInput.files.length > 0) {
-                    const files = Array.from(galleryInput.files);
-                    for (const f of files) {
-                        try {
-                            const url = await uploadFileToStorage(f);
-                            if (url) galleryUrls.push(url);
-                        } catch (err) {
-                            console.error('Gallery upload error for file', f.name, err);
-                            // continue uploading others
-                        }
+                if (isEditMode) {
+                    if (!carId) {
+                        throw new Error('تعذر تحديد السيارة المراد تعديلها.');
                     }
+                    const { error } = await window.supabase
+                        .from('cars')
+                        .update({ ...payload, updated_at: new Date().toISOString() })
+                        .eq('id', carId);
+                    if (error) {
+                        console.error('Update error:', error);
+                        throw new Error(error.message || 'خطأ أثناء تحديث السيارة.');
+                    }
+                    await fetchAndRenderCars(document.getElementById('carsTableBody'));
+                    showToast('تم تحديث السيارة بنجاح.', 'success');
+                } else {
+                    const { error } = await window.supabase
+                        .from('cars')
+                        .insert([payload]);
+
+                    if (error) {
+                        console.error('Insert error:', error);
+                        throw new Error(error.message || 'خطأ أثناء إضافة السيارة.');
+                    }
+                    await fetchAndRenderCars(document.getElementById('carsTableBody'));
+                    showToast('تمت إضافة السيارة بنجاح.', 'success');
                 }
 
-                // Prepare insert payload matching real schema
-                const payload = {
-                    brand,
-                    model,
-                    year: year,
-                    price: price,
-                    mileage: mileage || 0,
-                    fuel,
-                    transmission,
-                    city,
-                    horsepower: horsepower || null,
-                    doors: doors || 5,
-                    vignette: vignette !== null ? vignette : null,
-                    description: description || null,
-                    main_image: main_image_url,
-                    gallery: galleryUrls.length ? galleryUrls : [],
-                    status: status || 'available',
-                    inspection_status: inspection_status || 'pending',
-                    guarantee_months: guarantee_months || 0
-                };
-
-                // Insert into Supabase
-                const { data, error } = await window.supabase
-                    .from('cars')
-                    .insert([payload]);
-
-                if (error) {
-                    console.error('Insert error:', error);
-                    throw new Error(error.message || 'خطأ أثناء إضافة السيارة.');
-                }
-
-                // Success: refresh table and close modal
-                await fetchAndRenderCars(document.getElementById('carsTableBody'));
-                showToast('تمت إضافة السيارة بنجاح.', 'success');
-                hideModal();
                 addCarForm.reset();
+                setModalMode('add');
+                hideModal();
 
             } catch (err) {
-                console.error('Add car failed:', err);
+                console.error('Car form failed:', err);
                 if (addCarError) {
-                    addCarError.textContent = err.message || 'حدث خطأ أثناء إضافة السيارة.';
+                    addCarError.textContent = err.message || 'حدث خطأ أثناء حفظ السيارة.';
                     addCarError.style.display = 'block';
                 }
-                showToast(err.message || 'حدث خطأ أثناء إضافة السيارة.', 'error');
+                showToast(err.message || 'حدث خطأ أثناء حفظ السيارة.', 'error');
             } finally {
                 addCarSubmit.disabled = false;
-                addCarSubmit.textContent = 'حفظ';
+                addCarSubmit.textContent = isEditMode ? 'حفظ التغييرات' : 'حفظ';
             }
         });
     });
+
+    async function buildCarPayloadFromForm() {
+        // Collect values
+        const brand = (document.getElementById('fieldBrand') || {}).value?.trim();
+        const model = (document.getElementById('fieldModel') || {}).value?.trim();
+        const year = parseInt((document.getElementById('fieldYear') || {}).value) || null;
+        const priceRaw = (document.getElementById('fieldPrice') || {}).value;
+        const price = priceRaw !== undefined && priceRaw !== '' ? priceRaw : null;
+        const mileage = parseInt((document.getElementById('fieldMileage') || {}).value) || null;
+        const fuel = (document.getElementById('fieldFuel') || {}).value?.trim() || null;
+        const transmission = (document.getElementById('fieldTransmission') || {}).value?.trim() || null;
+        const city = (document.getElementById('fieldCity') || {}).value?.trim() || null;
+        const horsepower = parseInt((document.getElementById('fieldHorsepower') || {}).value) || null;
+        const doors = parseInt((document.getElementById('fieldDoors') || {}).value) || null;
+        const vignetteRaw = (document.getElementById('fieldVignette') || {}).value;
+        const vignette = vignetteRaw !== undefined && vignetteRaw !== '' ? vignetteRaw : null;
+        const description = (document.getElementById('fieldDescription') || {}).value?.trim() || null;
+        const status = (document.getElementById('fieldStatus') || {}).value || null;
+        const inspection_status = (document.getElementById('fieldInspection') || {}).value || null;
+        const guarantee_months = parseInt((document.getElementById('fieldGuarantee') || {}).value) || 0;
+
+        if (!brand || !model || !year || !price || !fuel || !transmission || !city) {
+            throw new Error('يرجى ملء الحقول المطلوبة: العلامة، النموذج، السنة، الثمن، الوقود، نقل الحركة، المدينة.');
+        }
+
+        const mainInput = document.getElementById('fieldMainImage');
+        const galleryInput = document.getElementById('fieldGallery');
+
+        let main_image_url = null;
+        if (mainInput && mainInput.files && mainInput.files.length > 0) {
+            main_image_url = await uploadFileToStorage(mainInput.files[0]);
+        }
+
+        let galleryUrls = [];
+        if (galleryInput && galleryInput.files && galleryInput.files.length > 0) {
+            const files = Array.from(galleryInput.files);
+            for (const f of files) {
+                try {
+                    const url = await uploadFileToStorage(f);
+                    if (url) galleryUrls.push(url);
+                } catch (err) {
+                    console.error('Gallery upload error for file', f.name, err);
+                }
+            }
+        }
+
+        const mode = (document.getElementById('addCarForm') || {}).dataset?.mode || 'add';
+        const existingCarId = Number((document.getElementById('addCarForm') || {}).dataset?.carId || 0);
+        let currentMainImage = null;
+        let currentGallery = [];
+        if (mode === 'edit' && existingCarId) {
+            const existingRes = await window.supabase
+                .from('cars')
+                .select('main_image,gallery')
+                .eq('id', existingCarId)
+                .single();
+            if (!existingRes.error && existingRes.data) {
+                currentMainImage = existingRes.data.main_image || null;
+                currentGallery = Array.isArray(existingRes.data.gallery) ? existingRes.data.gallery : [];
+            }
+        }
+
+        const payload = {
+            brand,
+            model,
+            year: year,
+            price: price,
+            mileage: mileage || 0,
+            fuel,
+            transmission,
+            city,
+            horsepower: horsepower || null,
+            doors: doors || 5,
+            vignette: vignette !== null ? vignette : null,
+            description: description || null,
+            main_image: main_image_url || currentMainImage || null,
+            gallery: galleryUrls.length ? galleryUrls : currentGallery,
+            status: status || 'available',
+            inspection_status: inspection_status || 'pending',
+            guarantee_months: guarantee_months || 0
+        };
+
+        return payload;
+    }
+
+    function fillFormFromCar(car) {
+        const fields = {
+            fieldBrand: car.brand || '',
+            fieldModel: car.model || '',
+            fieldYear: car.year || '',
+            fieldPrice: car.price || '',
+            fieldMileage: car.mileage || '',
+            fieldFuel: car.fuel || '',
+            fieldTransmission: car.transmission || '',
+            fieldCity: car.city || '',
+            fieldHorsepower: car.horsepower || '',
+            fieldDoors: car.doors || '',
+            fieldVignette: car.vignette || '',
+            fieldDescription: car.description || '',
+            fieldStatus: car.status || 'available',
+            fieldInspection: car.inspection_status || 'pending',
+            fieldGuarantee: car.guarantee_months || 0
+        };
+        Object.entries(fields).forEach(([id, value]) => {
+            const el = document.getElementById(id);
+            if (el) el.value = value;
+        });
+    }
+
+    async function openEditCarModal(carId) {
+        const addCarForm = document.getElementById('addCarForm');
+        const addCarModal = document.getElementById('addCarModal');
+        if (!addCarForm || !addCarModal) return;
+
+        try {
+            const { data, error } = await window.supabase
+                .from('cars')
+                .select('*')
+                .eq('id', carId)
+                .single();
+
+            if (error || !data) {
+                showToast('تعذر تحميل بيانات السيارة.', 'error');
+                return;
+            }
+
+            addCarForm.dataset.mode = 'edit';
+            addCarForm.dataset.carId = String(data.id);
+            setModalMode('edit', data);
+            addCarModal.style.display = 'block';
+        } catch (err) {
+            console.error('Open edit modal failed:', err);
+            showToast('تعذر فتح نموذج تعديل السيارة.', 'error');
+        }
+    }
 
     // Helper: upload a File object to car-images and return public URL
     async function uploadFileToStorage(file) {
