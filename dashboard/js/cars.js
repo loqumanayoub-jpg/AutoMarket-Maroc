@@ -170,11 +170,11 @@ function renderCarsTable(container, cars) {
     // Attach handlers (currently disabled behavior will be implemented in edit/delete phases)
     container.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', (e) => {
         e.preventDefault();
-        alert('تحرير السيارة غير مفعّل بعد.');
+            showToast('تحرير السيارة غير مفعّل بعد.', 'info');
     }));
     container.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', (e) => {
         e.preventDefault();
-        alert('حذف السيارة غير مفعّل بعد.');
+            showToast('حذف السيارة غير مفعّل بعد.', 'info');
     }));
 }
 
@@ -193,6 +193,27 @@ function readSearchFilters() {
         fuel: (document.getElementById('filterFuel') || {}).value || '',
         transmission: (document.getElementById('filterTransmission') || {}).value || ''
     };
+}
+
+// Simple toast utility
+function showToast(message, type = 'info', timeout = 4000) {
+    try {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const el = document.createElement('div');
+        el.className = `toast ${type}`;
+        el.textContent = message;
+        container.appendChild(el);
+        // force reflow to enable transition
+        requestAnimationFrame(() => el.classList.add('show'));
+        // remove after timeout
+        setTimeout(() => {
+            el.classList.remove('show');
+            setTimeout(() => el.remove(), 300);
+        }, timeout);
+    } catch (e) {
+        console.warn('Toast failed', e);
+    }
 }
 
 // ---------- Add Car Modal & Form Handling ----------
@@ -305,6 +326,7 @@ function readSearchFilters() {
 
                 // Success: refresh table and close modal
                 await fetchAndRenderCars(document.getElementById('carsTableBody'));
+                showToast('تمت إضافة السيارة بنجاح.', 'success');
                 hideModal();
                 addCarForm.reset();
 
@@ -314,6 +336,7 @@ function readSearchFilters() {
                     addCarError.textContent = err.message || 'حدث خطأ أثناء إضافة السيارة.';
                     addCarError.style.display = 'block';
                 }
+                showToast(err.message || 'حدث خطأ أثناء إضافة السيارة.', 'error');
             } finally {
                 addCarSubmit.disabled = false;
                 addCarSubmit.textContent = 'حفظ';

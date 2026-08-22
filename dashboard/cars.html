@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة السيارات — AutoMarket Maroc</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        /* Simple modal backdrop and content */
+        .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+        .modal .modal-content { position: relative; background: #fff; padding: 1rem 1.25rem; max-width: 720px; width: 95%; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
+        .modal .modal-content h3 { margin-top: 0; }
+        .modal .form-row { margin-bottom: 0.6rem; }
+        .modal .form-row label { display:block; margin-bottom: 0.25rem; font-size:0.95rem; }
+        .modal .form-actions { margin-top: 0.75rem; display:flex; gap:0.5rem; justify-content:flex-end; }
+
+        /* Toasts */
+        #toastContainer { position: fixed; top: 1rem; left: 1rem; z-index: 1100; display:flex; flex-direction:column; gap:0.5rem; }
+        .toast { min-width: 200px; max-width:360px; padding: 0.6rem 0.9rem; border-radius:6px; color:#fff; box-shadow:0 6px 18px rgba(0,0,0,0.2); opacity:0; transform:translateY(-6px); transition:opacity 220ms ease, transform 220ms ease; }
+        .toast.show { opacity:1; transform:translateY(0); }
+        .toast.success { background:#28a745; }
+        .toast.error { background:#dc3545; }
+        .toast.info { background:#17a2b8; }
+    </style>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -165,6 +183,8 @@
             </div>
         </main>
     </div>
+
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Scripts Order -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
