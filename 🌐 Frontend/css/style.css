@@ -490,7 +490,23 @@ html[dir="rtl"] .content-header {
   .header-actions { flex-direction: column; gap: 6px; }
   .data-table thead { display: none; }
   .data-table tbody td { display: block; width: 100%; }
+  .data-table tbody td { background: transparent; border-bottom: 1px solid var(--border); padding: 12px 10px; }
+  .data-table tbody td::before { content: attr(data-label); display: block; font-weight: 700; margin-bottom: 6px; color: var(--muted); }
 }
+
+/* Additional header/nav refinements */
+.site-header { box-shadow: var(--shadow); }
+.header-actions .btn { padding: 8px 10px; }
+.main-nav a { padding: 8px 10px; border-radius: 8px; }
+.main-nav a.active { background: rgba(37,99,235,0.08); color: var(--primary); }
+
+/* Sidebar placeholder for future work */
+.sidebar { width: 260px; background: white; border-right: 1px solid var(--border); padding: 18px; box-shadow: var(--shadow); }
+
+/* Improve table responsiveness */
+.data-table img { border-radius: 6px; }
+.data-table .btn { padding: 6px 8px; }
+
 
 
   padding: 27px;
