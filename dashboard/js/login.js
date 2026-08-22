@@ -38,8 +38,8 @@
                     return;
                 }
 
-                // النجاح -> التوجيه إلى index.html
-                window.location.href = 'index.html';
+                // النجاح -> التوجيه إلى صفحة لوحة التحكم الصحيحة
+                window.location.href = 'dashboard.html';
 
             } catch (err) {
                 console.error('Login error:', err);
