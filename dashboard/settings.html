@@ -1,70 +1,165 @@
 ﻿<!doctype html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Settings - Admin</title>
+  <title>الإعدادات - AutoMarket Maroc</title>
   <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
 </head>
-<body>
+<body class="dashboard-app">
+  <div class="dashboard-shell">
+    <aside class="sidebar-panel">
+      <div>
+        <div class="brand-lockup">
+          <img src="../🌐 Frontend/images/logo/logo.png" alt="AutoMarket Maroc Logo">
+          <div>
+            <strong>AutoMarket Maroc</strong>
+            <span>Royal dashboard</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Sidebar navigation">
+          <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">⌂</span>
+            <span>لوحة التحكم</span>
+          </a>
+          <a href="cars.html" class="nav-item">
+            <span class="nav-icon">🚗</span>
+            <span>السيارات</span>
+          </a>
+          <a href="messages.html" class="nav-item">
+            <span class="nav-icon">✉️</span>
+            <span>الرسائل</span>
+          </a>
+          <a href="settings.html" class="nav-item active">
+            <span class="nav-icon">⚙️</span>
+            <span>الإعدادات</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" type="button" class="btn btn-logout">تسجيل الخروج</button>
+      </div>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="topbar">
+        <div class="search-wrap" aria-label="Settings search">
+          <span>⌕</span>
+          <input type="text" placeholder="بحث في الإعدادات..." aria-label="Search settings" />
+        </div>
+
+        <div class="topbar-actions">
+          <button type="button" class="icon-button" aria-label="Notifications">
+            <span>🔔</span>
+            <span class="icon-badge">1</span>
+          </button>
+
+          <div class="lang-switcher" aria-label="Language selector">
+            <button type="button" class="lang-option active">AR</button>
+            <button type="button" class="lang-option">FR</button>
+            <button type="button" class="lang-option">EN</button>
+          </div>
+
+          <div class="admin-pill">
+            <div class="admin-avatar">AM</div>
+            <div>
+              <strong>Admin</strong>
+              <small>Operations</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content">
+        <section class="page-head">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h1>إعدادات لوحة التحكم</h1>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <div class="settings-layout">
+            <div class="setting-group">
+              <h3>Appearance</h3>
+              <div class="setting-row">
+                <div>
+                  <strong>RTL layout</strong>
+                  <p>تفعيل تنسيق عربي/RTL داخل لوحة التحكم.</p>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="rtlToggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="setting-row">
+                <div>
+                  <strong>Compact mode</strong>
+                  <p>تقليل المساحات لتحسين استخدام الشاشات الصغيرة.</p>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="compactToggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-group">
+              <h3>Language</h3>
+              <div class="setting-row">
+                <div>
+                  <strong>Preferred language</strong>
+                  <p>Arabic, Français, English.</p>
+                </div>
+                <select class="mini-select" aria-label="Language preference">
+                  <option>العربية</option>
+                  <option>Français</option>
+                  <option>English</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-group">
+              <h3>Account</h3>
+              <div class="setting-row">
+                <div>
+                  <strong>Admin account</strong>
+                  <p id="userEmail">Loading user…</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-group">
+              <h3>Security</h3>
+              <div class="setting-row">
+                <div>
+                  <strong>Session protection</strong>
+                  <p>Protected by Supabase session and dashboard auth.</p>
+                </div>
+                <span class="status-pill">Secure</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
   <script src="../🌐 Frontend/js/supabase.js"></script>
   <script src="js/auth.js"></script>
-
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="dashboard.html">
-        <img src="../🌐 Frontend/assets/logo.png" alt="logo">
-        <div>
-          <strong>AutoMarket Maroc</strong>
-          <span>Admin</span>
-        </div>
-      </a>
-
-      <nav class="main-nav" id="mainNav">
-        <a href="cars.html">Cars</a>
-        <a href="messages.html">Messages</a>
-        <a href="settings.html">Settings</a>
-        <a id="logoutLink" class="btn btn-light">Logout</a>
-      </nav>
-
-      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-    </div>
-  </header>
-
-  <main class="container">
-    <div class="content-header">
-      <h1>Settings</h1>
-      <p class="muted">Client-side dashboard settings. Changes here are stored in your browser only.</p>
-    </div>
-
-    <section class="card" style="padding:18px;">
-      <h3>Interface</h3>
-      <div style="display:flex; gap:12px; align-items:center; margin-top:10px;">
-        <label style="flex:1">Enable RTL layout (Arabic)</label>
-        <input type="checkbox" id="rtlToggle">
-      </div>
-      <p class="muted" style="margin-top:8px;">Toggles document direction to support RTL admin layouts. This setting is saved to localStorage.</p>
-    </section>
-
-    <section class="card" style="padding:18px; margin-top:14px;">
-      <h3>Local preferences</h3>
-      <div style="display:flex; gap:12px; align-items:center; margin-top:10px;">
-        <label style="flex:1">Compact tables</label>
-        <input type="checkbox" id="compactToggle">
-      </div>
-      <p class="muted" style="margin-top:8px;">These preferences affect only this browser on this device.</p>
-    </section>
-
-  </main>
-
   <script src="js/settings.js"></script>
   <script>
-    // Shared UI wiring
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
-    document.getElementById('logoutLink').addEventListener('click', async () => {
-      if (window.supabase && window.supabase.auth && typeof window.supabase.auth.signOut === 'function') {
-        await window.supabase.auth.signOut();
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        if (window.supabase && window.supabase.auth && typeof window.supabase.auth.signOut === 'function') {
+          await window.supabase.auth.signOut();
+        }
+      } catch (err) {
+        console.error('Logout failed:', err);
       }
       window.location.href = 'login.html';
     });

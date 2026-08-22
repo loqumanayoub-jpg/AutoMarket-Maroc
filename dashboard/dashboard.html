@@ -1,82 +1,104 @@
 ﻿<!doctype html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard - AutoMarket Maroc</title>
+  <title>لوحة التحكم - AutoMarket Maroc</title>
   <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
 </head>
-<body>
+<body class="dashboard-app">
+  <div class="dashboard-shell">
+    <aside class="sidebar-panel">
+      <div>
+        <div class="brand-lockup">
+          <img src="../🌐 Frontend/images/logo/logo.png" alt="AutoMarket Maroc Logo">
+          <div>
+            <strong>AutoMarket Maroc</strong>
+            <span>Royal dashboard</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Sidebar navigation">
+          <a href="dashboard.html" class="nav-item active">
+            <span class="nav-icon">⌂</span>
+            <span>لوحة التحكم</span>
+          </a>
+          <a href="cars.html" class="nav-item">
+            <span class="nav-icon">🚗</span>
+            <span>السيارات</span>
+          </a>
+          <a href="messages.html" class="nav-item">
+            <span class="nav-icon">✉️</span>
+            <span>الرسائل</span>
+          </a>
+          <a href="settings.html" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            <span>الإعدادات</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" type="button" class="btn btn-logout">تسجيل الخروج</button>
+      </div>
+    </aside>
+
+    <div class="dashboard-main">
+      <header class="topbar">
+        <div class="search-wrap" aria-label="Search">
+          <span>⌕</span>
+          <input type="text" placeholder="بحث سريع في النظام..." aria-label="Search dashboard" />
+        </div>
+
+        <div class="topbar-actions">
+          <button type="button" class="icon-button" aria-label="Notifications">
+            <span>🔔</span>
+            <span class="icon-badge">3</span>
+          </button>
+
+          <div class="lang-switcher" aria-label="Language selector">
+            <button type="button" class="lang-option active">AR</button>
+            <button type="button" class="lang-option">FR</button>
+            <button type="button" class="lang-option">EN</button>
+          </div>
+
+          <div class="admin-pill">
+            <div class="admin-avatar">AM</div>
+            <div>
+              <strong>Admin</strong>
+              <small>Operations</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-content">
+        <section class="page-head">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h1>Royal dashboard</h1>
+          </div>
+          <a class="btn btn-primary" href="cars.html">إدارة السيارات</a>
+        </section>
+
+        <section id="dashboardContent" class="overview-grid" aria-live="polite">
+          <div class="metric-card primary">
+            <div class="metric-top">
+              <span class="metric-icon">⏳</span>
+            </div>
+            <span class="metric-label">جارٍ التحميل</span>
+            <div class="metric-value">—</div>
+            <div class="metric-note">إعداد البيانات…</div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
   <script src="../🌐 Frontend/js/supabase.js"></script>
   <script src="js/auth.js"></script>
-
-  <main class="container">
-    <h1>Admin Dashboard</h1>
-
-    <nav>
-      <a href="cars.html">Cars</a> |
-      <a href="messages.html">Messages</a> |
-      <a href="settings.html">Settings</a> |
-      <button id="logoutBtn" class="btn btn-light">Logout</button>
-    </nav>
-
-    <section id="dashboardContent">
-      <p>Loading dashboard overview...</p>
-    </section>
-
-    <script>
-      // Small dashboard overview loader: queries simple counts and shows a brief summary.
-      document.addEventListener('DOMContentLoaded', async () => {
-        const container = document.getElementById('dashboardContent');
-        if (!container) return;
-
-        if (!window.supabase || typeof window.supabase.from !== 'function') {
-          container.innerHTML = '<p style="color:crimson">Supabase client not initialized. Please reload the page.</p>';
-          return;
-        }
-
-        try {
-          // total cars
-          const totalRes = await window.supabase.from('cars').select('id', { count: 'exact' }).limit(1);
-          if (totalRes.error) throw totalRes.error;
-          const total = totalRes.count || 0;
-
-          // available cars
-          const availRes = await window.supabase.from('cars').select('id', { count: 'exact' }).eq('status','available').limit(1);
-          if (availRes.error) throw availRes.error;
-          const available = availRes.count || 0;
-
-          container.innerHTML = `
-            <div class="dashboard-overview" style="display:flex; gap:12px; flex-wrap:wrap; align-items:stretch;">
-              <div style="background:white; padding:14px; border-radius:10px; box-shadow: var(--shadow); min-width:160px;">
-                <div style="font-size:13px; color:var(--muted)">Total cars</div>
-                <div style="font-size:20px; font-weight:700">${total}</div>
-              </div>
-              <div style="background:white; padding:14px; border-radius:10px; box-shadow: var(--shadow); min-width:160px;">
-                <div style="font-size:13px; color:var(--muted)">Available</div>
-                <div style="font-size:20px; font-weight:700; color:var(--primary)">${available}</div>
-              </div>
-              <div style="flex:1 1 300px; background:white; padding:14px; border-radius:10px; box-shadow: var(--shadow);">
-                <div style="font-size:13px; color:var(--muted)">Quick actions</div>
-                <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-                  <a href="cars.html" class="btn btn-primary">Manage Cars</a>
-                  <a href="messages.html" class="btn btn-light">Messages</a>
-                </div>
-              </div>
-            </div>
-          `;
-        } catch (err) {
-          console.error('Dashboard overview load failed:', err);
-          container.innerHTML = '<p style="color:crimson">Failed to load dashboard overview. Check console for details.</p>';
-        }
-      });
-    </script>
-
-  </main>
-
   <script>
-    // Use the shared client exposed by ../🌐 Frontend/js/supabase.js (window.supabase)
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       try {
         if (window.supabase && window.supabase.auth && typeof window.supabase.auth.signOut === 'function') {
@@ -86,6 +108,53 @@
         console.error('Logout failed:', err);
       }
       window.location.href = 'login.html';
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const container = document.getElementById('dashboardContent');
+      if (!container) return;
+
+      const safeCount = (value) => (typeof value === 'number' && Number.isFinite(value) ? value : 0);
+
+      const getCount = async (table, callback) => {
+        try {
+          if (!window.supabase || typeof window.supabase.from !== 'function') return 0;
+          let query = window.supabase.from(table).select('id', { count: 'exact' });
+          if (callback) query = callback(query);
+          const { count, error } = await query.limit(1);
+          if (error) {
+            console.warn(`Unable to count rows from ${table}:`, error);
+            return 0;
+          }
+          return safeCount(count);
+        } catch (error) {
+          console.warn(`Unable to count rows from ${table}:`, error);
+          return 0;
+        }
+      };
+
+      const totalCars = await getCount('cars');
+      const availableCars = await getCount('cars', q => q.eq('status', 'available'));
+      const soldCars = await getCount('cars', q => q.eq('status', 'sold'));
+      const messagesCount = await getCount('messages');
+
+      const cards = [
+        { label: 'إجمالي السيارات', value: totalCars, tone: 'primary', icon: '🚗', note: 'الحالي في قاعدة البيانات' },
+        { label: 'السيارات المتاحة', value: availableCars, tone: 'success', icon: '✅', note: 'جاهزة للعرض' },
+        { label: 'السيارات المباعة', value: soldCars, tone: 'warning', icon: '📦', note: 'موجودة في سجل المبيعات' },
+        { label: 'الرسائل', value: messagesCount, tone: 'accent', icon: '✉️', note: 'رسائل الواردة' }
+      ];
+
+      container.innerHTML = cards.map((card) => `
+        <article class="metric-card ${card.tone}">
+          <div class="metric-top">
+            <span class="metric-label">${card.label}</span>
+            <span class="metric-icon">${card.icon}</span>
+          </div>
+          <div class="metric-value">${card.value}</div>
+          <div class="metric-note">${card.note}</div>
+        </article>
+      `).join('');
     });
   </script>
 </body>
