@@ -1,20 +1,69 @@
 ﻿<!doctype html>
-<html lang=\"fr\">
+<html lang="fr">
 <head>
-  <meta charset=\"utf-8\">
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-  <title>messages.html - Admin</title>
-  <link rel=\"stylesheet\" href=\"../🌐 Frontend/css/style.css\">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Messages - Admin</title>
+  <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
 </head>
 <body>
-  <script src=\"https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js\"></script>
-  <script src=\"../🌐 Frontend/js/supabase.js\"></script>
-  <script src=\"js/auth.js\"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
+  <script src="../🌐 Frontend/js/supabase.js"></script>
+  <script src="js/auth.js"></script>
 
-  <main class=\"container\">
-    <h1>messages.html</h1>
-    <p>Admin interface placeholder. Implement management UIs here.</p>
-    <p><a href=\"dashboard.html\">Back to dashboard</a></p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="dashboard.html">
+        <img src="../🌐 Frontend/assets/logo.png" alt="logo">
+        <div>
+          <strong>AutoMarket Maroc</strong>
+          <span>Admin</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="cars.html">Cars</a>
+        <a href="messages.html">Messages</a>
+        <a href="settings.html">Settings</a>
+        <a id="logoutLink" class="btn btn-light">Logout</a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="content-header">
+      <h1>Messages</h1>
+      <p class="muted">Manage inbound contact & sell requests. Data is loaded from your Supabase project.</p>
+    </div>
+
+    <section id="messagesArea">
+      <div class="loading">Loading messages…</div>
+    </section>
+
+    <!-- Message viewer modal -->
+    <dialog id="messageModal" class="modal">
+      <form method="dialog">
+        <div class="modal-body" id="messageModalBody"></div>
+        <div class="modal-actions">
+          <button class="btn btn-light">Close</button>
+        </div>
+      </form>
+    </dialog>
+
   </main>
+
+  <script src="js/messages.js"></script>
+  <script>
+    // Small shared UI wiring: logout and mobile nav
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+    document.getElementById('logoutLink').addEventListener('click', async () => {
+      if (window.supabase && window.supabase.auth && typeof window.supabase.auth.signOut === 'function') {
+        await window.supabase.auth.signOut();
+      }
+      window.location.href = 'login.html';
+    });
+  </script>
 </body>
 </html>
