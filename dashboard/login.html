@@ -5,31 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول — AutoMarket Maroc Dashboard</title>
     <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
+    <style>
+        .reset-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.52);
+            padding: 16px;
+        }
+        .reset-panel-card {
+            width: min(100%, 440px);
+            max-height: calc(100vh - 32px);
+            overflow: auto;
+            background: #fff;
+            border-radius: 18px;
+            padding: 20px 18px;
+            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.2);
+            border: 1px solid #e2e8f0;
+        }
+        .reset-actions {
+            display: grid;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .reset-status {
+            display: none;
+            margin-top: 12px;
+        }
+        .reset-status.visible {
+            display: block;
+        }
+        [hidden] { display: none !important; }
+    </style>
 </head>
 <body class="login-body">
 
-    <div class="login-card">
-        <h2>لوحة التحكم</h2>
-        <p>قم بتسجيل الدخول للمتابعة</p>
+  <div class="login-hero">
+    <main class="login-wrap">
+      <div class="login-card card-elevated">
+        <div class="login-brand" aria-label="AutoMarket Maroc brand">
+          <img class="login-logo" src="../🌐 Frontend/images/logo/logo.png" alt="AutoMarket Maroc">
+          <div class="login-brand-copy">
+            <strong>AutoMarket Maroc</strong>
+            <small>Dashboard</small>
+          </div>
+        </div>
 
-        <div id="loginError" class="alert alert-danger" style="display: none;"></div>
+        <div class="login-header">
+          <h2 class="login-title">تسجيل الدخول</h2>
+          <p class="login-subtitle">مرحباً بك في AutoMarket Maroc</p>
+        </div>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="email">البريد الإلكتروني</label>
-                <input type="email" id="email" required placeholder="admin@domain.com">
-            </div>
-            <div class="form-group">
-                <label for="password">كلمة المرور</label>
-                <input type="password" id="password" required placeholder="••••••••">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
+        <div id="loginError" class="alert alert-danger" aria-live="polite" style="display: none;"></div>
+        <div id="loginSuccess" class="alert alert-success" aria-live="polite" style="display: none;"></div>
+
+        <form id="loginForm" class="login-form" novalidate>
+          <div class="field-group">
+            <label for="email">البريد الإلكتروني</label>
+            <input type="email" id="email" required placeholder="admin@domain.com" autocomplete="username" />
+          </div>
+
+          <div class="field-group">
+            <label for="password">كلمة المرور</label>
+            <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password" />
+          </div>
+
+          <div class="login-options">
+            <label class="remember-me" for="rememberMe">
+              <input type="checkbox" id="rememberMe" />
+              <span>تذكرني</span>
+            </label>
+            <button type="button" class="forgot-password-link" id="forgotPasswordBtn">نسيت كلمة المرور؟</button>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
         </form>
-    </div>
 
-    <!-- Scripts Order -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../🌐 Frontend/js/supabase.js"></script>
-    <script src="js/login.js"></script>
+        <div class="reset-overlay" id="resetPasswordPanel" hidden>
+          <div class="reset-panel-card" role="dialog" aria-modal="true" aria-labelledby="resetPasswordTitle">
+            <div class="reset-panel-header">
+              <h3 id="resetPasswordTitle" class="reset-title">إعادة تعيين كلمة المرور</h3>
+            </div>
+            <div id="resetStatus" class="alert reset-status" aria-live="polite"></div>
+            <form id="resetPasswordForm" class="reset-form" novalidate>
+              <div class="field-group">
+                <label for="resetEmail">البريد الإلكتروني</label>
+                <input type="email" id="resetEmail" placeholder="admin@domain.com" autocomplete="username" required />
+              </div>
+              <div class="reset-actions">
+                <button type="submit" class="btn btn-primary btn-block" id="resetSubmitBtn">إرسال رابط إعادة التعيين</button>
+                <button type="button" class="btn btn-light btn-block" id="cancelResetBtn">إلغاء</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="login-footer">
+          <div class="lang-switcher" aria-label="Language selector">
+            <button type="button" class="lang-option active">AR</button>
+            <button type="button" class="lang-option">FR</button>
+            <button type="button" class="lang-option">EN</button>
+          </div>
+          <small class="login-foot">© AutoMarket Maroc</small>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../🌐 Frontend/js/supabase.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>

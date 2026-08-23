@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>لوحة التحكم - AutoMarket Maroc</title>
   <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body class="dashboard-app">
   <div class="dashboard-shell">
@@ -14,25 +15,25 @@
           <img src="../🌐 Frontend/images/logo/logo.png" alt="AutoMarket Maroc Logo">
           <div>
             <strong>AutoMarket Maroc</strong>
-            <span>Royal dashboard</span>
+            <span>Admin workspace</span>
           </div>
         </div>
 
         <nav class="sidebar-nav" aria-label="Sidebar navigation">
           <a href="dashboard.html" class="nav-item active">
-            <span class="nav-icon">⌂</span>
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5M5 9.5V20h14V9.5" /></svg></span>
             <span>لوحة التحكم</span>
           </a>
           <a href="cars.html" class="nav-item">
-            <span class="nav-icon">🚗</span>
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14.5h18M5 14.5l1.5-5h11L19 14.5M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" /></svg></span>
             <span>السيارات</span>
           </a>
           <a href="messages.html" class="nav-item">
-            <span class="nav-icon">✉️</span>
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" /></svg></span>
             <span>الرسائل</span>
           </a>
           <a href="settings.html" class="nav-item">
-            <span class="nav-icon">⚙️</span>
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v2m0 13v2m8.5-8.5h-2M5.5 12h-2m14.1 7.1-1.4-1.4M8.8 8.8 7.4 7.4m9.2 0-1.4 1.4M8.8 15.2l-1.4 1.4M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" /></svg></span>
             <span>الإعدادات</span>
           </a>
         </nav>
@@ -45,14 +46,17 @@
 
     <div class="dashboard-main">
       <header class="topbar">
-        <div class="search-wrap" aria-label="Search">
-          <span>⌕</span>
-          <input type="text" placeholder="بحث سريع في النظام..." aria-label="Search dashboard" />
+        <div class="topbar-left">
+          <div class="topbar-title">لوحة التحكم</div>
+          <div class="search-wrap" aria-label="Search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>
+            <input type="text" placeholder="بحث سريع في النظام..." aria-label="Search dashboard" />
+          </div>
         </div>
 
         <div class="topbar-actions">
           <button type="button" class="icon-button" aria-label="Notifications">
-            <span>🔔</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5m6 0a3 3 0 1 1-6 0" /></svg>
             <span class="icon-badge">3</span>
           </button>
 
@@ -76,28 +80,82 @@
         <section class="page-head">
           <div>
             <p class="eyebrow">Overview</p>
-            <h1>Royal dashboard</h1>
+            <h1>لوحة التحكم</h1>
           </div>
-          <a class="btn btn-primary" href="cars.html">إدارة السيارات</a>
+          <div class="actions-row">
+            <a class="btn btn-primary" href="cars.html">إدارة السيارات</a>
+          </div>
         </section>
 
-        <section id="dashboardContent" class="overview-grid" aria-live="polite">
-          <div class="metric-card primary">
+        <section id="dashboardContent" class="kpi-grid" aria-live="polite">
+          <article class="metric-card primary">
             <div class="metric-top">
+              <span class="metric-label">جارٍ التحميل</span>
               <span class="metric-icon">⏳</span>
             </div>
-            <span class="metric-label">جارٍ التحميل</span>
             <div class="metric-value">—</div>
             <div class="metric-note">إعداد البيانات…</div>
-          </div>
+          </article>
+        </section>
+
+        <section class="activity-layout">
+          <article class="activity-card">
+            <div class="activity-head">
+              <h3>Recent Activity</h3>
+              <span class="status-pill">Live</span>
+            </div>
+            <ul class="activity-list">
+              <li class="activity-item">
+                <span class="activity-dot"></span>
+                <div>
+                  <strong>تم تحديث فهرس السيارات</strong>
+                  <small>منذ 5 دقائق</small>
+                </div>
+              </li>
+              <li class="activity-item">
+                <span class="activity-dot"></span>
+                <div>
+                  <strong>تمت مراجعة حالة السيارات</strong>
+                  <small>منذ 20 دقيقة</small>
+                </div>
+              </li>
+              <li class="activity-item">
+                <span class="activity-dot"></span>
+                <div>
+                  <strong>رسالة جديدة في الطلبات</strong>
+                  <small>منذ 1 ساعة</small>
+                </div>
+              </li>
+            </ul>
+          </article>
+
+          <aside class="summary-box">
+            <h4>نظرة سريعة</h4>
+            <div class="summary-stats">
+              <div class="summary-stat">
+                <span>سيارات متاحة</span>
+                <strong id="summaryAvailable">0</strong>
+              </div>
+              <div class="summary-stat">
+                <span>مباعة</span>
+                <strong id="summarySold">0</strong>
+              </div>
+              <div class="summary-stat">
+                <span>رسائل واردة</span>
+                <strong id="summaryMessages">0</strong>
+              </div>
+            </div>
+          </aside>
         </section>
       </main>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../🌐 Frontend/js/supabase.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard-shell.js"></script>
   <script>
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       try {
@@ -139,10 +197,10 @@
       const messagesCount = await getCount('messages');
 
       const cards = [
-        { label: 'إجمالي السيارات', value: totalCars, tone: 'primary', icon: '🚗', note: 'الحالي في قاعدة البيانات' },
-        { label: 'السيارات المتاحة', value: availableCars, tone: 'success', icon: '✅', note: 'جاهزة للعرض' },
-        { label: 'السيارات المباعة', value: soldCars, tone: 'warning', icon: '📦', note: 'موجودة في سجل المبيعات' },
-        { label: 'الرسائل', value: messagesCount, tone: 'accent', icon: '✉️', note: 'رسائل الواردة' }
+        { label: 'إجمالي السيارات', value: totalCars, tone: 'primary', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14.5h18M5 14.5l1.5-5h11L19 14.5M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" /></svg>', note: 'الحالي في قاعدة البيانات' },
+        { label: 'السيارات المتاحة', value: availableCars, tone: 'success', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 12 3 3 7-7" /><path d="M20 12A8 8 0 1 1 12 4a8 8 0 0 1 8 8Z" /></svg>', note: 'جاهزة للعرض' },
+        { label: 'السيارات المباعة', value: soldCars, tone: 'warning', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h16v7H4zm2 0V5h12v2.5M8 17.5h8" /></svg>', note: 'موجودة في سجل المبيعات' },
+        { label: 'الرسائل', value: messagesCount, tone: 'accent', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" /></svg>', note: 'رسائل الواردة' }
       ];
 
       container.innerHTML = cards.map((card) => `
@@ -155,6 +213,13 @@
           <div class="metric-note">${card.note}</div>
         </article>
       `).join('');
+
+      const availableEl = document.getElementById('summaryAvailable');
+      const soldEl = document.getElementById('summarySold');
+      const messagesEl = document.getElementById('summaryMessages');
+      if (availableEl) availableEl.textContent = String(availableCars);
+      if (soldEl) soldEl.textContent = String(soldCars);
+      if (messagesEl) messagesEl.textContent = String(messagesCount);
     });
   </script>
 </body>

@@ -5,17 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة السيارات — AutoMarket Maroc</title>
     <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <style>
-        /* Simple modal backdrop and content */
-        .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 1000; }
-        .modal::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
-        .modal .modal-content { position: relative; background: #fff; padding: 1rem 1.25rem; max-width: 720px; width: 95%; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
-        .modal .modal-content h3 { margin-top: 0; }
-        .modal .form-row { margin-bottom: 0.6rem; }
-        .modal .form-row label { display:block; margin-bottom: 0.25rem; font-size:0.95rem; }
+        .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
+        .modal::before { content: ''; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.52); }
+        .modal .modal-content {
+            position: relative;
+            background: #fff;
+            padding: 1.05rem 1.15rem 0;
+            max-width: 820px;
+            width: min(100%, 820px);
+            max-height: min(92vh, 760px);
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.2);
+            direction: rtl;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal .modal-content h3 { margin-top: 0; margin-bottom: 0.8rem; }
+        .modal .modal-content > form,
+        .modal .modal-content > div {
+            overflow-y: auto;
+            flex: 1;
+            max-height: calc(92vh - 120px);
+            padding-bottom: 1rem;
+        }
+        .modal .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.85rem 1rem;
+            align-items: start;
+        }
+        .modal .form-row { margin-bottom: 0.15rem; }
+        .modal .form-row label { display:block; margin-bottom: 0.28rem; font-size:0.94rem; font-weight:600; }
+        .modal .form-row input,
+        .modal .form-row textarea,
+        .modal .form-row select {
+            width: 100%; box-sizing: border-box; padding: 0.7rem 0.8rem; border: 1px solid #dbe3ee; border-radius: 10px; font: inherit; }
+        .modal .form-row textarea { min-height: 88px; resize: vertical; }
         .modal .form-actions { margin-top: 0.75rem; display:flex; gap:0.5rem; justify-content:flex-end; }
-
-        /* Toasts */
+        .modal .alert { margin-top: 0.75rem; }
+        .modal .modal-footer {
+            grid-column: 1 / -1;
+            position: sticky;
+            bottom: 0;
+            display:flex;
+            justify-content:flex-end;
+            gap:0.5rem;
+            margin-top:0.6rem;
+            padding:0.8rem 0 1rem;
+            border-top:1px solid #eef2f7;
+            background: #fff;
+            z-index: 2;
+        }
+        @media (max-width: 768px) {
+            .modal .form-grid { grid-template-columns: 1fr; }
+            .modal .modal-content { width: 100%; max-height: 92vh; }
+            .modal .modal-content > form,
+            .modal .modal-content > div { max-height: calc(92vh - 90px); }
+        }
         #toastContainer { position: fixed; top: 1rem; left: 1rem; z-index: 1100; display:flex; flex-direction:column; gap:0.5rem; }
         .toast { min-width: 200px; max-width:360px; padding: 0.6rem 0.9rem; border-radius:6px; color:#fff; box-shadow:0 6px 18px rgba(0,0,0,0.2); opacity:0; transform:translateY(-6px); transition:opacity 220ms ease, transform 220ms ease; }
         .toast.show { opacity:1; transform:translateY(0); }
@@ -24,7 +74,7 @@
         .toast.info { background:#17a2b8; }
     </style>
 </head>
-<body>
+<body class="dashboard-app">
     <div class="dashboard-shell">
         <aside class="sidebar-panel">
             <div>
@@ -32,25 +82,25 @@
                     <img src="../🌐 Frontend/images/logo/logo.png" alt="AutoMarket Maroc Logo">
                     <div>
                         <strong>AutoMarket Maroc</strong>
-                        <span>Royal dashboard</span>
+                        <span>Admin workspace</span>
                     </div>
                 </div>
 
                 <nav class="sidebar-nav" aria-label="Sidebar navigation">
                     <a href="dashboard.html" class="nav-item">
-                        <span class="nav-icon">⌂</span>
+                        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5M5 9.5V20h14V9.5" /></svg></span>
                         <span>لوحة التحكم</span>
                     </a>
                     <a href="cars.html" class="nav-item active">
-                        <span class="nav-icon">🚗</span>
+                        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14.5h18M5 14.5l1.5-5h11L19 14.5M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" /></svg></span>
                         <span>السيارات</span>
                     </a>
                     <a href="messages.html" class="nav-item">
-                        <span class="nav-icon">✉️</span>
+                        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" /></svg></span>
                         <span>الرسائل</span>
                     </a>
                     <a href="settings.html" class="nav-item">
-                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v2m0 13v2m8.5-8.5h-2M5.5 12h-2m14.1 7.1-1.4-1.4M8.8 8.8 7.4 7.4m9.2 0-1.4 1.4M8.8 15.2l-1.4 1.4M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" /></svg></span>
                         <span>الإعدادات</span>
                     </a>
                 </nav>
@@ -63,14 +113,17 @@
 
         <div class="dashboard-main">
             <header class="topbar">
-                <div class="search-wrap" aria-label="Search">
-                    <span>⌕</span>
-                    <input type="text" placeholder="بحث سريع في النظام..." aria-label="Search dashboard" />
+                <div class="topbar-left">
+                    <div class="topbar-title">إدارة السيارات</div>
+                    <div class="search-wrap" aria-label="Search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>
+                        <input type="text" placeholder="بحث سريع في النظام..." aria-label="Search dashboard" />
+                    </div>
                 </div>
 
                 <div class="topbar-actions">
                     <button type="button" class="icon-button" aria-label="Notifications">
-                        <span>🔔</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5m6 0a3 3 0 1 1-6 0" /></svg>
                         <span class="icon-badge">3</span>
                     </button>
 
@@ -161,52 +214,66 @@
                 </section>
 
                 <!-- Add Car Modal (preserve IDs) -->
+                <!-- Delete confirmation modal -->
+                <div id="deleteConfirmModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3 id="deleteConfirmTitle">هل أنت متأكد؟</h3>
+                        <p id="deleteConfirmText">هذا الإجراء سيحذف السيارة نهائياً.</p>
+                        <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.75rem;">
+                            <button id="confirmDeleteBtn" class="btn btn-danger">حذف</button>
+                            <button id="cancelDeleteBtn" class="btn">إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Car Modal (preserve IDs) -->
                 <div id="addCarModal" class="modal" style="display:none;">
                     <div class="modal-content">
                         <h3 id="addCarTitle">إضافة سيارة جديدة</h3>
                         <form id="addCarForm">
+                            <div class="form-grid">
                             <div class="form-row">
-                                <label>العلامة (brand) *</label>
+                                <label>العلامة *</label>
                                 <input type="text" id="fieldBrand" required />
                             </div>
                             <div class="form-row">
-                                <label>النموذج (model) *</label>
+                                <label>النموذج *</label>
                                 <input type="text" id="fieldModel" required />
                             </div>
                             <div class="form-row">
-                                <label>السنة (year) *</label>
+                                <label>السنة *</label>
                                 <input type="number" id="fieldYear" required />
                             </div>
                             <div class="form-row">
-                                <label>الثمن (price) *</label>
+                                <label>الثمن *</label>
                                 <input type="number" id="fieldPrice" step="0.01" required />
                             </div>
                             <div class="form-row">
-                                <label>المسافة (mileage)</label>
+                                <label>المسافة</label>
                                 <input type="number" id="fieldMileage" />
                             </div>
                             <div class="form-row">
-                                <label>الوقود (fuel) *</label>
+                                <label>نوع الوقود *</label>
                                 <input type="text" id="fieldFuel" required />
                             </div>
                             <div class="form-row">
-                                <label>نقل الحركة (transmission) *</label>
+                                <label>نقل الحركة *</label>
                                 <input type="text" id="fieldTransmission" required />
                             </div>
                             <div class="form-row">
-                                <label>المدينة (city) *</label>
+                                <label>المدينة *</label>
                                 <input type="text" id="fieldCity" required />
                             </div>
                             <div class="form-row">
-                                <label>قوة الحصان (horsepower)</label>
+                                <label>قوة الحصان</label>
                                 <input type="number" id="fieldHorsepower" />
                             </div>
                             <div class="form-row">
-                                <label>الأبواب (doors)</label>
+                                <label>عدد الأبواب</label>
                                 <input type="number" id="fieldDoors" />
                             </div>
                             <div class="form-row">
-                                <label>التأمين (vignette)</label>
+                                <label>التأمين (Vignette)</label>
                                 <input type="number" id="fieldVignette" step="0.01" />
                             </div>
                             <div class="form-row">
@@ -214,41 +281,42 @@
                                 <textarea id="fieldDescription"></textarea>
                             </div>
                             <div class="form-row">
-                                <label>حالة (status)</label>
+                                <label>الحالة</label>
                                 <select id="fieldStatus">
-                                    <option value="available">available</option>
-                                    <option value="sold">sold</option>
-                                    <option value="unlisted">unlisted</option>
+                                    <option value="available">متاحة</option>
+                                    <option value="sold">مباعة</option>
+                                    <option value="unlisted">غير منشورة</option>
                                 </select>
                             </div>
                             <div class="form-row">
-                                <label>inspection_status</label>
+                                <label>حالة الفحص</label>
                                 <select id="fieldInspection">
-                                    <option value="pending">pending</option>
-                                    <option value="verified">verified</option>
-                                    <option value="rejected">rejected</option>
+                                    <option value="pending">قيد الانتظار</option>
+                                    <option value="verified">مُثبتة</option>
+                                    <option value="rejected">مرفوضة</option>
                                 </select>
                             </div>
                             <div class="form-row">
-                                <label>guarantee_months</label>
+                                <label>شهور الضمان</label>
                                 <input type="number" id="fieldGuarantee" />
                             </div>
 
                             <div class="form-row">
-                                <label>الصورة الرئيسية (main_image)</label>
+                                <label>الصورة الرئيسية</label>
                                 <input type="file" id="fieldMainImage" accept="image/*" />
                             </div>
                             <div class="form-row">
-                                <label>معرض الصور (gallery) - يمكنك اختيار عدة صور</label>
+                                <label>معرض الصور (يمكن اختيار عدة صور)</label>
                                 <input type="file" id="fieldGallery" accept="image/*" multiple />
                             </div>
 
                             <div id="addCarError" class="alert alert-danger" style="display:none;"></div>
 
-                            <div class="form-actions">
+                            <div class="modal-footer">
                                 <button type="submit" id="addCarSubmit" class="btn btn-primary">حفظ</button>
                                 <button type="button" id="addCarCancel" class="btn">إلغاء</button>
                             </div>
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -258,12 +326,13 @@
             </main>
         </div>
 
-    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
-
+    
     <!-- Scripts Order -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../🌐 Frontend/js/supabase.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/dashboard-shell.js"></script>
     <script src="js/cars.js"></script>
 </body>
 </html>

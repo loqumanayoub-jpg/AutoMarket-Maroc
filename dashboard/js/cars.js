@@ -143,16 +143,14 @@ function showErrorState(container, message) {
 }
 
 function renderCarsTable(container, cars) {
-    const defaultPlaceholder = 'https://via.placeholder.com/80x60?text=No+Image';
+    const defaultPlaceholder = '../🌐 Frontend/images/placeholder.svg';
 
     const rowsHtml = cars.map(car => {
-        const imageUrl = car.main_image && car.main_image.trim() !== '' 
-            ? car.main_image 
-            : defaultPlaceholder;
+        const imageUrl = resolvePublicImageUrl(car.main_image, defaultPlaceholder);
 
         return `
             <tr>
-                <td><img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(car.brand || '')} ${escapeHtml(car.model || '')}" style="width:70px; height:50px; object-fit:cover; border-radius:4px;" /></td>
+                <td><img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(car.brand || '')} ${escapeHtml(car.model || '')}" style="width:70px; height:50px; object-fit:cover; border-radius:4px;" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='../🌐 Frontend/images/placeholder.svg';" /></td>
                 <td><strong>${escapeHtml(car.brand || '')} ${escapeHtml(car.model || '')}</strong></td>
                 <td>${car.year || 'N/A'}</td>
                 <td>${car.price ? Number(car.price).toLocaleString() : 0} MAD</td>
@@ -177,9 +175,66 @@ function renderCarsTable(container, cars) {
             }
             await openEditCarModal(carId);
     }));
+    // Delete handlers: show confirmation modal and perform DELETE preserving filters
     container.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', (e) => {
             e.preventDefault();
-            showToast('حذف السيارة غير مفعّل بعد.', 'info');
+            const carId = Number(b.dataset.id);
+            if (!carId) { showToast('تعذر تحديد السيارة للحذف.', 'error'); return; }
+
+            // populate and show delete modal
+            const modal = document.getElementById('deleteConfirmModal');
+            const title = document.getElementById('deleteConfirmTitle');
+            const text = document.getElementById('deleteConfirmText');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const cancelBtn = document.getElementById('cancelDeleteBtn');
+
+            // try to get a friendly car label
+            const brand = b.closest('tr')?.querySelector('td:nth-child(2)')?.textContent?.trim() || `#${carId}`;
+            if (title) title.textContent = `حذف ${brand}`;
+            if (text) text.textContent = 'هل أنت متأكد أنك تريد حذف هذه السيارة؟ لا يمكن التراجع عن هذا الإجراء.';
+
+            function cleanup() {
+                if (confirmBtn) confirmBtn.onclick = null;
+                if (cancelBtn) cancelBtn.onclick = null;
+                if (modal) modal.style.display = 'none';
+            }
+
+            if (cancelBtn) cancelBtn.onclick = function(ev) { ev.preventDefault(); cleanup(); };
+
+            if (confirmBtn) {
+                confirmBtn.onclick = async function(ev) {
+                    ev.preventDefault();
+                    try {
+                        confirmBtn.disabled = true;
+                        confirmBtn.textContent = 'جارٍ الحذف...';
+
+                        // perform delete via Supabase respecting RLS
+                        const { error } = await window.supabase
+                            .from('cars')
+                            .delete()
+                            .eq('id', carId);
+
+                        if (error) {
+                            console.error('Delete error:', error);
+                            showToast('فشل حذف السيارة: ' + (error.message || 'خطأ في الخادم'), 'error');
+                        } else {
+                            showToast('تم حذف السيارة بنجاح.', 'success');
+                            // refresh using current filters
+                            const filters = readSearchFilters();
+                            await fetchAndRenderCars(document.getElementById('carsTableBody'), filters);
+                        }
+                    } catch (err) {
+                        console.error('Delete failed:', err);
+                        showToast('حدث خطأ أثناء حذف السيارة.', 'error');
+                    } finally {
+                        confirmBtn.disabled = false;
+                        if (confirmBtn) confirmBtn.textContent = 'حذف';
+                        cleanup();
+                    }
+                };
+            }
+
+            if (modal) modal.style.display = 'block';
     }));
 }
 
@@ -248,6 +303,58 @@ function setModalMode(mode, carData = null) {
     }
 }
 
+function fillFormFromCar(car) {
+    const fields = {
+        fieldBrand: car.brand || '',
+        fieldModel: car.model || '',
+        fieldYear: car.year || '',
+        fieldPrice: car.price || '',
+        fieldMileage: car.mileage || '',
+        fieldFuel: car.fuel || '',
+        fieldTransmission: car.transmission || '',
+        fieldCity: car.city || '',
+        fieldHorsepower: car.horsepower || '',
+        fieldDoors: car.doors || '',
+        fieldVignette: car.vignette || '',
+        fieldDescription: car.description || '',
+        fieldStatus: car.status || 'available',
+        fieldInspection: car.inspection_status || 'pending',
+        fieldGuarantee: car.guarantee_months || 0
+    };
+    Object.entries(fields).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
+    });
+}
+
+async function openEditCarModal(carId) {
+    const addCarForm = document.getElementById('addCarForm');
+    const addCarModal = document.getElementById('addCarModal');
+    if (!addCarForm || !addCarModal) return;
+
+    try {
+        const { data, error } = await window.supabase
+            .from('cars')
+            .select('*')
+            .eq('id', carId)
+            .single();
+
+        if (error || !data) {
+            showToast('تعذر تحميل بيانات السيارة.', 'error');
+            return;
+        }
+
+        addCarForm.dataset.mode = 'edit';
+        addCarForm.dataset.carId = String(data.id);
+        setModalMode('edit', data);
+        addCarModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    } catch (err) {
+        console.error('Open edit modal failed:', err);
+        showToast('تعذر فتح نموذج تعديل السيارة.', 'error');
+    }
+}
+
 // ---------- Add Car Modal & Form Handling ----------
 (function registerAddCarHandlers(){
     // Wait for DOM ready; this IIFE runs after file load but ensure elements exist
@@ -261,8 +368,14 @@ function setModalMode(mode, carData = null) {
 
         if (!addCarBtn || !addCarModal || !addCarForm) return;
 
-        function showModal() { addCarModal.style.display = 'block'; }
-        function hideModal() { addCarModal.style.display = 'none'; }
+        function showModal() {
+            addCarModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function hideModal() {
+            addCarModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
 
         addCarBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -274,6 +387,14 @@ function setModalMode(mode, carData = null) {
             addCarForm.reset();
             setModalMode('add');
             hideModal();
+        });
+
+        addCarModal.addEventListener('click', (e) => {
+            if (e.target === addCarModal) {
+                addCarForm.reset();
+                setModalMode('add');
+                hideModal();
+            }
         });
 
         addCarForm.addEventListener('submit', async (e) => {
@@ -295,6 +416,24 @@ function setModalMode(mode, carData = null) {
                     if (!carId) {
                         throw new Error('تعذر تحديد السيارة المراد تعديلها.');
                     }
+
+                    // Ensure user is authenticated before attempting update (avoids RLS rejection)
+                    try {
+                        const sessionResp = await window.supabase.auth.getSession();
+                        const session = sessionResp?.data?.session;
+                        if (!session || !session.user) {
+                            showToast('الرجاء تسجيل الدخول لإجراء التغييرات.', 'error');
+                            // brief delay so user sees toast, then redirect to login
+                            setTimeout(() => window.location.replace('login.html'), 900);
+                            return;
+                        }
+                    } catch (e) {
+                        console.warn('Failed to verify session before update', e);
+                        showToast('حالة المصادقة غير معروفة. الرجاء إعادة تسجيل الدخول.', 'error');
+                        setTimeout(() => window.location.replace('login.html'), 900);
+                        return;
+                    }
+
                     const { error } = await window.supabase
                         .from('cars')
                         .update({ ...payload, updated_at: new Date().toISOString() })
@@ -306,6 +445,22 @@ function setModalMode(mode, carData = null) {
                     await fetchAndRenderCars(document.getElementById('carsTableBody'));
                     showToast('تم تحديث السيارة بنجاح.', 'success');
                 } else {
+                    // Ensure user is authenticated before attempting insert (RLS requires authenticated)
+                    try {
+                        const sessionResp = await window.supabase.auth.getSession();
+                        const session = sessionResp?.data?.session;
+                        if (!session || !session.user) {
+                            showToast('الرجاء تسجيل الدخول لإضافة سيارة جديدة.', 'error');
+                            setTimeout(() => window.location.replace('login.html'), 900);
+                            return;
+                        }
+                    } catch (e) {
+                        console.warn('Failed to verify session before insert', e);
+                        showToast('حالة المصادقة غير معروفة. الرجاء إعادة تسجيل الدخول.', 'error');
+                        setTimeout(() => window.location.replace('login.html'), 900);
+                        return;
+                    }
+
                     const { error } = await window.supabase
                         .from('cars')
                         .insert([payload]);
@@ -418,57 +573,6 @@ function setModalMode(mode, carData = null) {
         };
 
         return payload;
-    }
-
-    function fillFormFromCar(car) {
-        const fields = {
-            fieldBrand: car.brand || '',
-            fieldModel: car.model || '',
-            fieldYear: car.year || '',
-            fieldPrice: car.price || '',
-            fieldMileage: car.mileage || '',
-            fieldFuel: car.fuel || '',
-            fieldTransmission: car.transmission || '',
-            fieldCity: car.city || '',
-            fieldHorsepower: car.horsepower || '',
-            fieldDoors: car.doors || '',
-            fieldVignette: car.vignette || '',
-            fieldDescription: car.description || '',
-            fieldStatus: car.status || 'available',
-            fieldInspection: car.inspection_status || 'pending',
-            fieldGuarantee: car.guarantee_months || 0
-        };
-        Object.entries(fields).forEach(([id, value]) => {
-            const el = document.getElementById(id);
-            if (el) el.value = value;
-        });
-    }
-
-    async function openEditCarModal(carId) {
-        const addCarForm = document.getElementById('addCarForm');
-        const addCarModal = document.getElementById('addCarModal');
-        if (!addCarForm || !addCarModal) return;
-
-        try {
-            const { data, error } = await window.supabase
-                .from('cars')
-                .select('*')
-                .eq('id', carId)
-                .single();
-
-            if (error || !data) {
-                showToast('تعذر تحميل بيانات السيارة.', 'error');
-                return;
-            }
-
-            addCarForm.dataset.mode = 'edit';
-            addCarForm.dataset.carId = String(data.id);
-            setModalMode('edit', data);
-            addCarModal.style.display = 'block';
-        } catch (err) {
-            console.error('Open edit modal failed:', err);
-            showToast('تعذر فتح نموذج تعديل السيارة.', 'error');
-        }
     }
 
     // Helper: upload a File object to car-images and return public URL

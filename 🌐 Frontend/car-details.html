@@ -5,6 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Car Details - AutoMarket Maroc</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Restored car details layout and constrained main image size (page-scoped overrides) */
+    .car-detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+      margin-top: 8px;
+    }
+
+    .details-gallery {
+      max-width: 720px;
+    }
+
+    .details-gallery .main-image {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 14px;
+      background: #f1f5f9;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+      display: block;
+    }
+
+    .gallery-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 8px;
+      margin-left: 6px;
+      overflow-x: auto;
+      align-items: center;
+    }
+
+    .thumbnail {
+      width: 72px;
+      height: 54px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      opacity: 0.9;
+      border: 1px solid #e2e8f0;
+    }
+
+    .thumbnail.active {
+      outline: 3px solid rgba(16,185,129,0.12);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+      opacity: 1;
+    }
+
+    .details-info {
+      max-width: 520px;
+    }
+
+    @media (max-width: 900px) {
+      .car-detail-layout { grid-template-columns: 1fr; }
+      .details-gallery .main-image { height: 320px; }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -32,30 +96,8 @@
   <main class="container" style="padding: 40px 0;">
     <a href="index.html#cars" class="btn secondary" style="margin-bottom: 20px;">← Back to Cars</a>
     
-    <div id="detailsContainer" class="contact-card" style="grid-template-columns: 1fr 1fr; display: grid;">
-      <div class="details-image-box">
-        <img id="carDetailImage" src="" alt="Car Image" style="width:100%; height:auto; border-radius:10px; object-fit:cover;">
-      </div>
-      <div class="details-info-box">
-        <h2 id="carDetailTitle" style="font-size:28px; margin-top:0;">Car Title</h2>
-        <p id="carDetailPrice" class="price-tag" style="font-size:24px;">0 MAD</p>
-        
-        <div class="card-specs-grid" style="margin: 20px 0;">
-          <div class="spec-item"><span class="spec-icon">📅</span> <strong>Year:</strong> <span id="carDetailYear">-</span></div>
-          <div class="spec-item"><span class="spec-icon">🛣️</span> <strong>Mileage:</strong> <span id="carDetailMileage">-</span></div>
-          <div class="spec-item"><span class="spec-icon">⚙️</span> <strong>Trans:</strong> <span id="carDetailTrans">-</span></div>
-          <div class="spec-item"><span class="spec-icon">⛽</span> <strong>Fuel:</strong> <span id="carDetailFuel">-</span></div>
-          <div class="spec-item"><span class="spec-icon">📍</span> <strong>City:</strong> <span id="carDetailCity">-</span></div>
-        </div>
-
-        <h3>Description</h3>
-        <p id="carDetailDesc" style="color: var(--muted); line-height: 1.6;">No description available.</p>
-        
-        <div style="margin-top: 30px;">
-          <a id="carDetailWhatsApp" href="#" target="_blank" class="btn whatsapp" style="padding: 14px 24px; font-size: 16px;">💬 Contact Seller via WhatsApp</a>
-        </div>
-      </div>
-    </div>
+    <!-- Single container used by the canonical external renderer -->
+    <div id="carDetails"></div>
   </main>
 
   <footer class="site-footer">
@@ -78,31 +120,10 @@
   </footer>
 
   <script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/dist/umd/supabase.js"></script>
+  <script src="js/supabase.js"></script>
   <script src="js/cars.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const carId = parseInt(params.get("id"));
-      const car = carsData.find(c => c.id === carId);
-
-      if (!car) {
-        document.getElementById("detailsContainer").innerHTML = "<h2>Car not found!</h2>";
-        return;
-      }
-
-      document.getElementById("carDetailImage").src = car.image;
-      document.getElementById("carDetailTitle").innerText = `${car.brand} ${car.model}`;
-      document.getElementById("carDetailPrice").innerText = `${car.price.toLocaleString()} MAD`;
-      document.getElementById("carDetailYear").innerText = car.year;
-      document.getElementById("carDetailMileage").innerText = `${car.mileage.toLocaleString()} km`;
-      document.getElementById("carDetailTrans").innerText = car.transmission;
-      document.getElementById("carDetailFuel").innerText = car.fuel;
-      document.getElementById("carDetailCity").innerText = car.city;
-      document.getElementById("carDetailDesc").innerText = car.description || "No description provided.";
-
-      const waMsg = encodeURIComponent(`Hello, I'm interested in the ${car.brand} ${car.model} (${car.year}) priced at ${car.price} MAD.`);
-      document.getElementById("carDetailWhatsApp").href = `https://wa.me/${siteConfig.whatsappNumber}?text=${waMsg}`;
-    });
-  </script>
+  <!-- canonical external renderer for the details page -->
+  <script src="js/car-details.js"></script>
 </body>
 </html>

@@ -30,6 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('admin:prefs', JSON.stringify(prefs));
   }
 
+  // language select integration (keeps small client-side preference)
+  const langSelect = document.querySelector('.mini-select');
+  if (langSelect) {
+    // map labels to codes
+    const map = { 'العربية':'ar', 'Français':'fr', 'English':'en' };
+    const currentLang = localStorage.getItem('admin:lang') || 'ar';
+    // try to set select based on stored lang
+    for (let i=0;i<langSelect.options.length;i++){
+      const opt = langSelect.options[i];
+      if (map[opt.text] === currentLang) { langSelect.selectedIndex = i; break; }
+    }
+
+    langSelect.addEventListener('change', (e) => {
+      const code = map[e.target.value] || 'ar';
+      localStorage.setItem('admin:lang', code);
+      // notify UI
+      document.dispatchEvent(new CustomEvent('admin:lang:changed', { detail: { lang: code } }));
+    });
+  }
+
   if (rtlToggle) {
     rtlToggle.addEventListener('change', (e) => {
       prefs.rtl = !!e.target.checked;

@@ -2,7 +2,14 @@
    AutoMarket Maroc - Main JavaScript
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+// Ensure the shared car dataset exists before any legacy code touches it.
+// The public landing page loads the live cars from Supabase on startup.
+if (typeof CARS_DATA === 'undefined') {
+  CARS_DATA = [];
+  try { if (typeof window !== 'undefined') window.CARS_DATA = CARS_DATA; } catch (e) { /* ignore */ }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
 
   /* ================= CONFIG ================= */
 
@@ -395,7 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="card-image">
 
           <img
-            src="${car.image}"
+            src="${resolvePublicImageUrl(car.main_image, 'images/placeholder.svg')}"
             alt="${car.brand} ${car.model}"
             loading="lazy"
           >
@@ -579,9 +586,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ================= INITIALIZE ================= */
 
-  populateFilters();
+  async function loadCarsData() {
+    try {
+      const cars = typeof ensureCarsData === 'function'
+        ? await ensureCarsData()
+        : await getCarsFromSupabase();
 
-  renderCars(CARS_DATA);
+      CARS_DATA = Array.isArray(cars) ? cars : [];
+      if (typeof window !== 'undefined') window.CARS_DATA = CARS_DATA;
+
+      populateFilters();
+      renderCars(CARS_DATA);
+    } catch (error) {
+      console.error('Unable to load cars data:', error);
+      CARS_DATA = [];
+      if (typeof window !== 'undefined') window.CARS_DATA = CARS_DATA;
+      populateFilters();
+      renderCars(CARS_DATA);
+    }
+  }
+
+  await loadCarsData();
 
 
   /* ================= STATS COUNTERS ================= */
