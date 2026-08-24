@@ -7,6 +7,18 @@
     {
       "source": "/car-details.html",
       "destination": "/🌐 Frontend/car-details.html"
+    },
+    {
+      "source": "/css/(.*)",
+      "destination": "/🌐 Frontend/css/$1"
+    },
+    {
+      "source": "/js/(.*)",
+      "destination": "/🌐 Frontend/js/$1"
+    },
+    {
+      "source": "/images/(.*)",
+      "destination": "/🌐 Frontend/images/$1"
     }
   ]
 }
