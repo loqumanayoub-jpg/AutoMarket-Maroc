@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/%F0%9F%8C%90%20Frontend/index.html"
+      "destination": "/🌐 Frontend/index.html"
     },
     {
       "source": "/car-details.html",
-      "destination": "/%F0%9F%8C%90%20Frontend/car-details.html"
+      "destination": "/🌐 Frontend/car-details.html"
     }
   ]
 }
