@@ -18,17 +18,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    // Try to fetch messages; select * so we render available fields generically
-    const { data, error } = await window.supabase
-      .from('messages')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(200);
-
-    if (error) throw error;
+    const messageStore = window.__dashboardMessageStore__;
+    const data = messageStore
+      ? await messageStore.load(200)
+      : (await window.supabase.from('messages').select('*').order('created_at', { ascending: false }).limit(200)).data;
 
     if (!data || !data.length) {
-      showEmptyState('No messages found. If you expect messages, ensure your Supabase table `messages` exists and the API key/session has permission to read it.');
+      showEmptyState('لا توجد رسائل واردة حالياً.');
       return;
     }
 
@@ -89,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Failed to load messages:', err);
 
     // Show a professional empty state with guidance
-    showEmptyState('Failed to load messages from Supabase. Check console for details and verify a `messages` table exists and your RLS/policies allow SELECT for the current role.');
+    showEmptyState('تعذر تحميل الرسائل حالياً. يرجى المحاولة مرة أخرى.');
   }
 
   function openMessage(row) {

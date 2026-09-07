@@ -4,11 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>لوحة التحكم - AutoMarket Maroc</title>
+
   <link rel="stylesheet" href="../🌐 Frontend/css/style.css">
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
+
 <body class="dashboard-app">
   <div class="dashboard-shell">
+
+    <!-- Sidebar -->
     <aside class="sidebar-panel">
       <div>
         <div class="brand-lockup">
@@ -21,73 +25,417 @@
 
         <nav class="sidebar-nav" aria-label="Sidebar navigation">
           <a href="dashboard.html" class="nav-item active">
-            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5M5 9.5V20h14V9.5" /></svg></span>
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 10.5 12 3l9 7.5M5 9.5V20h14V9.5" />
+              </svg>
+            </span>
             <span>لوحة التحكم</span>
           </a>
+
           <a href="cars.html" class="nav-item">
-            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14.5h18M5 14.5l1.5-5h11L19 14.5M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" /></svg></span>
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 14.5h18M5 14.5l1.5-5h11L19 14.5M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+              </svg>
+            </span>
             <span>السيارات</span>
           </a>
+
           <a href="messages.html" class="nav-item">
-            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" /></svg></span>
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" />
+              </svg>
+            </span>
             <span>الرسائل</span>
           </a>
+
           <a href="settings.html" class="nav-item">
-            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v2m0 13v2m8.5-8.5h-2M5.5 12h-2m14.1 7.1-1.4-1.4M8.8 8.8 7.4 7.4m9.2 0-1.4 1.4M8.8 15.2l-1.4 1.4M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" /></svg></span>
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3.5v2m0 13v2m8.5-8.5h-2M5.5 12h-2m14.1 7.1-1.4-1.4M8.8 8.8 7.4 7.4m9.2 0-1.4 1.4M8.8 15.2l-1.4 1.4M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" />
+              </svg>
+            </span>
             <span>الإعدادات</span>
           </a>
         </nav>
       </div>
 
       <div class="sidebar-footer">
-        <button id="logoutBtn" type="button" class="btn btn-logout">تسجيل الخروج</button>
+        <button id="logoutBtn" type="button" class="btn btn-logout">
+          تسجيل الخروج
+        </button>
       </div>
     </aside>
 
+    <!-- Main -->
     <div class="dashboard-main">
-      <header class="topbar">
+
+      <!-- Topbar -->
+      <header class="topbar premium-topbar">
         <div class="topbar-left">
           <div class="topbar-title">لوحة التحكم</div>
-          <div class="search-wrap" aria-label="Search">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>
-            <input type="text" placeholder="بحث سريع في النظام..." aria-label="Search dashboard" />
-          </div>
         </div>
 
         <div class="topbar-actions">
-          <button type="button" class="icon-button" aria-label="Notifications">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5m6 0a3 3 0 1 1-6 0" /></svg>
-            <span class="icon-badge">3</span>
+
+          <label class="header-search" aria-label="Search cars">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11 4a7 7 0 0 1 5.5 11.9l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 1 1 11 4Z" />
+            </svg>
+
+            <input
+              id="headerCarSearch"
+              type="search"
+              placeholder="بحث سريع في السيارات..."
+              aria-label="بحث سريع في السيارات"
+            />
+          </label>
+
+          <button
+            id="themeToggleBtn"
+            type="button"
+            class="icon-button"
+            aria-label="Toggle theme"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v2m0 14v2m9-9h-2M5 12H3m13.6 6.4-1.4-1.4M9.8 9.8 8.4 8.4m7.2 0-1.4 1.4M9.8 14.2l-1.4 1.4M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z" />
+            </svg>
+          </button>
+
+          <button
+            id="messagesButton"
+            type="button"
+            class="icon-button"
+            aria-label="Messages"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" />
+            </svg>
+          </button>
+
+          <button
+            id="notificationButton"
+            type="button"
+            class="icon-button"
+            aria-label="Notifications"
+            aria-expanded="false"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5m6 0a3 3 0 1 1-6 0" />
+            </svg>
+
+            <span id="notificationBadge" class="icon-badge" hidden>0</span>
           </button>
 
           <div class="lang-switcher" aria-label="Language selector">
-            <button type="button" class="lang-option active">AR</button>
-            <button type="button" class="lang-option">FR</button>
-            <button type="button" class="lang-option">EN</button>
+            <button type="button" class="lang-option active" data-lang="ar">AR</button>
+            <button type="button" class="lang-option" data-lang="fr">FR</button>
+            <button type="button" class="lang-option" data-lang="en">EN</button>
           </div>
 
-          <div class="admin-pill">
+          <button
+            type="button"
+            class="admin-pill"
+            id="profileTrigger"
+            aria-expanded="false"
+            aria-haspopup="menu"
+          >
             <div class="admin-avatar">AM</div>
+
             <div>
-              <strong>Admin</strong>
-              <small>Operations</small>
+              <strong id="profileName">Admin</strong>
+              <small id="profileRole">Operations</small>
             </div>
-          </div>
+          </button>
         </div>
       </header>
 
+      <!-- Notifications -->
+      <div
+        id="notificationPanel"
+        class="notification-panel hidden"
+        aria-live="polite"
+      >
+        <div class="panel-header compact">
+          <div>
+            <p class="eyebrow">Notifications</p>
+            <h3>الإشعارات</h3>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-ghost"
+            id="markNotificationsRead"
+          >
+            تحديد كمقروء
+          </button>
+        </div>
+
+        <div id="notificationList" class="notification-list"></div>
+      </div>
+
+      <!-- Profile menu -->
+      <div
+        id="profileMenu"
+        class="profile-menu hidden"
+        role="menu"
+        aria-label="Profile menu"
+      >
+        <button type="button" class="profile-menu-item" data-action="profile">
+          Profile
+        </button>
+
+        <button type="button" class="profile-menu-item" data-action="settings">
+          Settings
+        </button>
+
+        <button type="button" class="profile-menu-item" data-action="language">
+          Language
+        </button>
+
+        <button type="button" class="profile-menu-item" data-action="appearance">
+          Appearance
+        </button>
+
+        <button type="button" class="profile-menu-item danger" data-action="logout">
+          Logout
+        </button>
+      </div>
+
+      <!-- Dashboard -->
       <main class="dashboard-content">
-        <section class="page-head">
+
+        <!-- Head -->
+        <section class="page-head premium-head">
           <div>
             <p class="eyebrow">Overview</p>
             <h1>لوحة التحكم</h1>
           </div>
+
           <div class="actions-row">
-            <a class="btn btn-primary" href="cars.html">إدارة السيارات</a>
+            <a class="btn btn-primary" href="cars.html">
+              إدارة السيارات
+            </a>
           </div>
         </section>
 
-        <section id="dashboardContent" class="kpi-grid" aria-live="polite">
+        <!-- KPI -->
+        <section
+          id="dashboardContent"
+          class="kpi-grid"
+          aria-live="polite"
+        >
+          <article class="metric-card primary">
+            <div class="metric-top">
+              <span class="metric-label">جارٍ التحميل</span>
+              <span class="metric-icon">⏳</span>
+            </div>
+
+            <div class="metric-value">—</div>
+            <div class="metric-note">إعداد البيانات…</div>
+          </article>
+        </section>
+
+        <!-- Recent Cars -->
+        <section class="dashboard-home-panel">
+          <div class="panel-card recent-cars-panel">
+
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Cars</p>
+                <h3>آخر السيارات المضافة</h3>
+              </div>
+
+              <a class="btn btn-light" href="cars.html">
+                إدارة السيارات
+              </a>
+            </div>
+
+            <div id="recentCarsContainer" class="recent-cars-container"></div>
+          </div>
+        </section>
+
+        <!-- Analytics -->
+        <section class="analytics-layout">
+          <article class="analytics-card">
+
+            <div class="panel-header compact">
+              <div>
+                <p class="eyebrow">Analytics</p>
+                <h3>أداء الموقع والسيارات</h3>
+              </div>
+            </div>
+
+            <div id="analyticsContainer" class="analytics-container"></div>
+          </article>
+        </section>
+
+        <!-- Activity + Summary -->
+        <section class="activity-layout">
+
+          <article class="activity-card">
+            <div class="activity-head">
+              <h3>آخر النشاطات</h3>
+              <span class="status-pill">Live</span>
+            </div>
+
+            <div id="recentActivityContainer"></div>
+          </article>
+
+          <aside class="summary-box">
+            <h4>نظرة سريعة</h4>
+
+            <div class="summary-stats">
+
+              <div class="summary-stat">
+                <span>متاحة</span>
+                <strong id="summaryAvailable">0</strong>
+              </div>
+
+              <div class="summary-stat">
+                <span>محجوزة</span>
+                <strong id="summaryReserved">0</strong>
+              </div>
+
+              <div class="summary-stat">
+                <span>مباعة</span>
+                <strong id="summarySold">0</strong>
+              </div>
+
+              <div class="summary-stat">
+                <span>رسائل واردة</span>
+                <strong id="summaryMessages">0</strong>
+              </div>
+
+            </div>
+          </aside>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../🌐 Frontend/js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard-shell.js"></script>
+
+  <!-- Dashboard logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+
+      /* =========================================================
+         DOM REFERENCES
+      ========================================================= */
+
+      const container = document.getElementById('dashboardContent');
+      const recentCarsContainer = document.getElementById('recentCarsContainer');
+      const recentActivityContainer = document.getElementById('recentActivityContainer');
+
+      const notificationBadge = document.getElementById('notificationBadge');
+      const notificationList = document.getElementById('notificationList');
+      const notificationPanel = document.getElementById('notificationPanel');
+      const notificationButton = document.getElementById('notificationButton');
+
+      const profileMenu = document.getElementById('profileMenu');
+      const profileTrigger = document.getElementById('profileTrigger');
+
+      const analyticsContainer = document.getElementById('analyticsContainer');
+
+      const headerCarSearch = document.getElementById('headerCarSearch');
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+      const availableEl = document.getElementById('summaryAvailable');
+      const reservedEl = document.getElementById('summaryReserved');
+      const soldEl = document.getElementById('summarySold');
+      const messagesEl = document.getElementById('summaryMessages');
+
+      const logoutBtn = document.getElementById('logoutBtn');
+      const markReadBtn = document.getElementById('markNotificationsRead');
+
+      if (!container) {
+        console.error('Dashboard container not found.');
+        return;
+      }
+
+      /* =========================================================
+         HELPERS
+      ========================================================= */
+
+      const safeCount = (value) => {
+        return (
+          typeof value === 'number' &&
+          Number.isFinite(value)
+        ) ? value : 0;
+      };
+
+      const escapeHtml = (value) => {
+        return String(value ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      };
+
+      /* =========================================================
+         PROFILE
+      ========================================================= */
+
+      const setProfileMeta = async () => {
+        const profileNameEl = document.getElementById('profileName');
+        const profileRoleEl = document.getElementById('profileRole');
+        const adminAvatar = document.querySelector('.admin-avatar');
+
+        try {
+          if (
+            !window.supabase ||
+            !window.supabase.auth ||
+            typeof window.supabase.auth.getSession !== 'function'
+          ) {
+            return;
+          }
+
+          const {
+            data: { session }
+          } = await window.supabase.auth.getSession();
+
+          const email = session?.user?.email || 'Admin';
+          const name = email.split('@')[0] || 'Admin';
+
+          if (profileNameEl) {
+            profileNameEl.textContent = name;
+          }
+
+          if (profileRoleEl) {
+            profileRoleEl.textContent = 'Administrator';
+          }
+
+          if (adminAvatar) {
+            adminAvatar.textContent = (
+              email.charAt(0) || 'A'
+            ).toUpperCase();
+          }
+
+        } catch (error) {
+          console.warn(
+            'Profile metadata unavailable:',
+            error
+          );
+        }
+      };
+
+      /* =========================================================
+         LOADING / ERROR
+      ========================================================= */
+
+      const renderLoading = () => {
+
+        container.innerHTML = `
           <article class="metric-card primary">
             <div class="metric-top">
               <span class="metric-label">جارٍ التحميل</span>
@@ -96,130 +444,1623 @@
             <div class="metric-value">—</div>
             <div class="metric-note">إعداد البيانات…</div>
           </article>
-        </section>
 
-        <section class="activity-layout">
-          <article class="activity-card">
-            <div class="activity-head">
-              <h3>Recent Activity</h3>
-              <span class="status-pill">Live</span>
+          <article class="metric-card success">
+            <div class="metric-top">
+              <span class="metric-label">جارٍ التحميل</span>
+              <span class="metric-icon">⏳</span>
             </div>
-            <ul class="activity-list">
-              <li class="activity-item">
-                <span class="activity-dot"></span>
-                <div>
-                  <strong>تم تحديث فهرس السيارات</strong>
-                  <small>منذ 5 دقائق</small>
-                </div>
-              </li>
-              <li class="activity-item">
-                <span class="activity-dot"></span>
-                <div>
-                  <strong>تمت مراجعة حالة السيارات</strong>
-                  <small>منذ 20 دقيقة</small>
-                </div>
-              </li>
-              <li class="activity-item">
-                <span class="activity-dot"></span>
-                <div>
-                  <strong>رسالة جديدة في الطلبات</strong>
-                  <small>منذ 1 ساعة</small>
-                </div>
-              </li>
-            </ul>
+            <div class="metric-value">—</div>
+            <div class="metric-note">إعداد البيانات…</div>
           </article>
 
-          <aside class="summary-box">
-            <h4>نظرة سريعة</h4>
-            <div class="summary-stats">
-              <div class="summary-stat">
-                <span>سيارات متاحة</span>
-                <strong id="summaryAvailable">0</strong>
-              </div>
-              <div class="summary-stat">
-                <span>مباعة</span>
-                <strong id="summarySold">0</strong>
-              </div>
-              <div class="summary-stat">
-                <span>رسائل واردة</span>
-                <strong id="summaryMessages">0</strong>
-              </div>
+          <article class="metric-card warning">
+            <div class="metric-top">
+              <span class="metric-label">جارٍ التحميل</span>
+              <span class="metric-icon">⏳</span>
             </div>
-          </aside>
-        </section>
-      </main>
-    </div>
-  </div>
+            <div class="metric-value">—</div>
+            <div class="metric-note">إعداد البيانات…</div>
+          </article>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../🌐 Frontend/js/supabase.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/dashboard-shell.js"></script>
-  <script>
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      try {
-        if (window.supabase && window.supabase.auth && typeof window.supabase.auth.signOut === 'function') {
-          await window.supabase.auth.signOut();
+          <article class="metric-card accent">
+            <div class="metric-top">
+              <span class="metric-label">جارٍ التحميل</span>
+              <span class="metric-icon">⏳</span>
+            </div>
+            <div class="metric-value">—</div>
+            <div class="metric-note">إعداد البيانات…</div>
+          </article>
+        `;
+
+        if (recentCarsContainer) {
+          recentCarsContainer.innerHTML = `
+            <div class="empty-state">
+              <h3>جاري تحميل السيارات الأخيرة...</h3>
+              <p>يتم جلب بيانات السيارات من قاعدة البيانات.</p>
+            </div>
+          `;
         }
-      } catch (err) {
-        console.error('Logout failed:', err);
-      }
-      window.location.href = 'login.html';
-    });
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      const container = document.getElementById('dashboardContent');
-      if (!container) return;
+        if (recentActivityContainer) {
+          recentActivityContainer.innerHTML = `
+            <div class="empty-state">
+              <h3>جارٍ تحميل آخر النشاطات...</h3>
+              <p>يتم تحديث النشاطات الأخيرة.</p>
+            </div>
+          `;
+        }
 
-      const safeCount = (value) => (typeof value === 'number' && Number.isFinite(value) ? value : 0);
+        if (analyticsContainer) {
+          analyticsContainer.innerHTML = `
+            <div class="empty-state">
+              <h3>جارٍ تحميل التحليل...</h3>
+              <p>يتم فحص البيانات المتاحة.</p>
+            </div>
+          `;
+        }
+      };
 
-      const getCount = async (table, callback) => {
+      const renderError = (message, retryHandler) => {
+
+        container.innerHTML = `
+          <article
+            class="metric-card primary"
+            style="grid-column: 1 / -1;"
+          >
+            <div class="error-state">
+              <h3>تعذر تحميل لوحة التحكم</h3>
+
+              <p>
+                ${escapeHtml(message)}
+              </p>
+
+              <button
+                type="button"
+                class="btn btn-primary retry-button"
+              >
+                إعادة المحاولة
+              </button>
+            </div>
+          </article>
+        `;
+
+        const retryButton =
+          container.querySelector('.retry-button');
+
+        if (
+          retryButton &&
+          typeof retryHandler === 'function'
+        ) {
+          retryButton.addEventListener(
+            'click',
+            retryHandler
+          );
+        }
+      };
+
+      /* =========================================================
+         SUPABASE DATA
+      ========================================================= */
+
+      const getCount = async (
+        table,
+        callback = null
+      ) => {
+
         try {
-          if (!window.supabase || typeof window.supabase.from !== 'function') return 0;
-          let query = window.supabase.from(table).select('id', { count: 'exact' });
-          if (callback) query = callback(query);
-          const { count, error } = await query.limit(1);
-          if (error) {
-            console.warn(`Unable to count rows from ${table}:`, error);
+
+          if (
+            !window.supabase ||
+            typeof window.supabase.from !== 'function'
+          ) {
             return 0;
           }
+
+          let query =
+            window.supabase
+              .from(table)
+              .select('id', {
+                count: 'exact',
+                head: true
+              });
+
+          if (typeof callback === 'function') {
+            query = callback(query);
+          }
+
+          const { count, error } = await query;
+
+          if (error) {
+            console.warn(
+              `Unable to count rows from ${table}:`,
+              error
+            );
+            return 0;
+          }
+
           return safeCount(count);
+
         } catch (error) {
-          console.warn(`Unable to count rows from ${table}:`, error);
+          console.warn(
+            `Unable to count rows from ${table}:`,
+            error
+          );
           return 0;
         }
       };
 
-      const totalCars = await getCount('cars');
-      const availableCars = await getCount('cars', q => q.eq('status', 'available'));
-      const soldCars = await getCount('cars', q => q.eq('status', 'sold'));
-      const messagesCount = await getCount('messages');
+      const getRecentCars = async () => {
 
-      const cards = [
-        { label: 'إجمالي السيارات', value: totalCars, tone: 'primary', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14.5h18M5 14.5l1.5-5h11L19 14.5M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" /></svg>', note: 'الحالي في قاعدة البيانات' },
-        { label: 'السيارات المتاحة', value: availableCars, tone: 'success', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 12 3 3 7-7" /><path d="M20 12A8 8 0 1 1 12 4a8 8 0 0 1 8 8Z" /></svg>', note: 'جاهزة للعرض' },
-        { label: 'السيارات المباعة', value: soldCars, tone: 'warning', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h16v7H4zm2 0V5h12v2.5M8 17.5h8" /></svg>', note: 'موجودة في سجل المبيعات' },
-        { label: 'الرسائل', value: messagesCount, tone: 'accent', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v7A2.5 2.5 0 0 1 17.5 17H10l-6 4v-4.5A2.5 2.5 0 0 1 4 14.5v-7Z" /></svg>', note: 'رسائل الواردة' }
-      ];
+        try {
 
-      container.innerHTML = cards.map((card) => `
-        <article class="metric-card ${card.tone}">
-          <div class="metric-top">
-            <span class="metric-label">${card.label}</span>
-            <span class="metric-icon">${card.icon}</span>
+          if (
+            !window.supabase ||
+            typeof window.supabase.from !== 'function'
+          ) {
+            return [];
+          }
+
+          const {
+            data,
+            error
+          } = await window.supabase
+            .from('cars')
+            .select('*')
+            .order('created_at', {
+              ascending: false
+            })
+            .limit(5);
+
+          if (error) {
+            console.warn(
+              'Unable to load recent cars:',
+              error
+            );
+            return [];
+          }
+
+          return Array.isArray(data)
+            ? data
+            : [];
+
+        } catch (error) {
+          console.warn(
+            'Unable to load recent cars:',
+            error
+          );
+          return [];
+        }
+      };
+
+      const getAllCars = async () => {
+
+        try {
+
+          if (
+            !window.supabase ||
+            typeof window.supabase.from !== 'function'
+          ) {
+            return [];
+          }
+
+          const {
+            data,
+            error
+          } = await window.supabase
+            .from('cars')
+            .select('*')
+            .order('created_at', {
+              ascending: false
+            });
+
+          if (error) {
+            console.warn(
+              'Unable to load all cars:',
+              error
+            );
+            return [];
+          }
+
+          return Array.isArray(data)
+            ? data
+            : [];
+
+        } catch (error) {
+          console.warn(
+            'Unable to load all cars:',
+            error
+          );
+          return [];
+        }
+      };
+
+      const getMessages = async (
+        limit = 20
+      ) => {
+
+        if (window.__dashboardMessageStore__) {
+          try {
+            return await window.__dashboardMessageStore__.load(limit);
+          } catch (error) {
+            console.warn('Unable to load messages:', error);
+            return [];
+          }
+        }
+
+        try {
+
+          if (
+            !window.supabase ||
+            typeof window.supabase.from !== 'function'
+          ) {
+            return [];
+          }
+
+          const {
+            data,
+            error
+          } = await window.supabase
+            .from('messages')
+            .select('*')
+            .order('created_at', {
+              ascending: false
+            })
+            .limit(limit);
+
+          if (error) {
+            console.warn(
+              'Unable to load messages:',
+              error
+            );
+            return [];
+          }
+
+          return Array.isArray(data)
+            ? data
+            : [];
+
+        } catch (error) {
+          console.warn(
+            'Unable to load messages:',
+            error
+          );
+          return [];
+        }
+      };
+
+      /* =========================================================
+         KPI CARDS
+      ========================================================= */
+
+      const renderDashboardCards = async () => {
+
+        const total = await getCount('cars');
+
+        const available =
+          await getCount(
+            'cars',
+            (q) => q.eq(
+              'status',
+              'available'
+            )
+          );
+
+        const reserved =
+          await getCount(
+            'cars',
+            (q) => q.eq(
+              'status',
+              'reserved'
+            )
+          );
+
+        const sold =
+          await getCount(
+            'cars',
+            (q) => q.eq(
+              'status',
+              'sold'
+            )
+          );
+
+        const messageCount =
+          await getCount('messages');
+
+        if (availableEl) {
+          availableEl.textContent =
+            String(available);
+        }
+
+        if (reservedEl) {
+          reservedEl.textContent =
+            String(reserved);
+        }
+
+        if (soldEl) {
+          soldEl.textContent =
+            String(sold);
+        }
+
+        if (messagesEl) {
+          messagesEl.textContent =
+            String(messageCount);
+        }
+
+        const cards = [
+          {
+            label: 'إجمالي السيارات',
+            value: total,
+            note: 'العدد الإجمالي في قاعدة البيانات',
+            tone: 'primary',
+            icon: '🚗'
+          },
+          {
+            label: 'السيارات المتاحة',
+            value: available,
+            note: 'جاهزة للعرض',
+            tone: 'success',
+            icon: '✅'
+          },
+          {
+            label: 'السيارات المحجوزة',
+            value: reserved,
+            note: 'قيد الحجز',
+            tone: 'warning',
+            icon: '⏳'
+          },
+          {
+            label: 'السيارات المباعة',
+            value: sold,
+            note: 'في سجل المبيعات',
+            tone: 'accent',
+            icon: '📦'
+          }
+        ];
+
+        container.innerHTML =
+          cards.map((card) => `
+            <article class="metric-card ${card.tone}">
+              <div class="metric-top">
+                <span class="metric-label">
+                  ${escapeHtml(card.label)}
+                </span>
+
+                <span class="metric-icon">
+                  ${card.icon}
+                </span>
+              </div>
+
+              <div class="metric-value">
+                ${safeCount(card.value)}
+              </div>
+
+              <div class="metric-note">
+                ${escapeHtml(card.note)}
+              </div>
+            </article>
+          `).join('');
+      };
+
+      /* =========================================================
+         RECENT CARS
+      ========================================================= */
+
+      const renderRecentCars = async () => {
+
+        if (!recentCarsContainer) {
+          return;
+        }
+
+        const cars =
+          await getRecentCars();
+
+        if (!cars.length) {
+          recentCarsContainer.innerHTML = `
+            <div class="empty-state">
+              <h3>لا توجد سيارات حالياً</h3>
+              <p>
+                لم يتم العثور على بيانات سيارات حقيقية في قاعدة البيانات.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        const rows =
+          cars.slice(0, 5).map((car) => {
+
+            const statusClass =
+              car.status === 'sold'
+                ? 'sold'
+                : car.status === 'reserved'
+                  ? 'reserved'
+                  : 'available';
+
+            const statusText =
+              car.status === 'sold'
+                ? 'مباعة'
+                : car.status === 'reserved'
+                  ? 'محجوزة'
+                  : 'متاحة';
+
+            const imageSrc =
+              car.main_image ||
+              '../🌐 Frontend/images/placeholder.svg';
+
+            const carLabel =
+              `${car.brand || ''} ${car.model || ''}`
+                .trim() ||
+              'سيارة';
+
+            const price =
+              car.price !== null &&
+              car.price !== undefined &&
+              car.price !== ''
+                ? Number(car.price).toLocaleString('en-US')
+                : '—';
+
+            return `
+              <tr>
+                <td class="thumb-cell">
+                  <img
+                    src="${escapeHtml(imageSrc)}"
+                    alt="${escapeHtml(carLabel)}"
+                    loading="lazy"
+                    decoding="async"
+                    onerror="
+                      this.onerror=null;
+                      this.src='../🌐 Frontend/images/placeholder.svg';
+                    "
+                  />
+                </td>
+
+                <td>
+                  <strong>
+                    ${escapeHtml(carLabel)}
+                  </strong>
+
+                  <div class="meta-muted">
+                    ${escapeHtml(car.city || '')}
+                  </div>
+                </td>
+
+                <td>
+                  ${escapeHtml(car.year || '—')}
+                </td>
+
+                <td>
+                  ${escapeHtml(price)} MAD
+                </td>
+
+                <td>
+                  <span class="status-chip ${statusClass}">
+                    ${statusText}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="action-group">
+                    <button
+                      type="button"
+                      class="table-action view-btn"
+                      data-id="${escapeHtml(String(car.id))}"
+                    >
+                      عرض
+                    </button>
+
+                    <button
+                      type="button"
+                      class="table-action edit-btn"
+                      data-id="${escapeHtml(String(car.id))}"
+                    >
+                      تعديل
+                    </button>
+
+                    <button
+                      type="button"
+                      class="table-action delete-btn danger"
+                      data-id="${escapeHtml(String(car.id))}"
+                    >
+                      حذف
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+
+        recentCarsContainer.innerHTML = `
+          <div class="table-scroll">
+            <table class="recent-cars-table">
+
+              <thead>
+                <tr>
+                  <th>الصورة</th>
+                  <th>السيارة</th>
+                  <th>السنة</th>
+                  <th>السعر</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${rows}
+              </tbody>
+
+            </table>
           </div>
-          <div class="metric-value">${card.value}</div>
-          <div class="metric-note">${card.note}</div>
-        </article>
-      `).join('');
+        `;
 
-      const availableEl = document.getElementById('summaryAvailable');
-      const soldEl = document.getElementById('summarySold');
-      const messagesEl = document.getElementById('summaryMessages');
-      if (availableEl) availableEl.textContent = String(availableCars);
-      if (soldEl) soldEl.textContent = String(soldCars);
-      if (messagesEl) messagesEl.textContent = String(messagesCount);
+        /* View */
+        recentCarsContainer
+          .querySelectorAll('.view-btn')
+          .forEach((button) => {
+
+            button.addEventListener(
+              'click',
+              () => {
+
+                const carId =
+                  button.dataset.id;
+
+                if (!carId) return;
+
+                window.open(
+                  `../🌐 Frontend/car-details.html?id=${encodeURIComponent(carId)}`,
+                  '_blank',
+                  'noopener'
+                );
+              }
+            );
+          });
+
+        /* Edit */
+        recentCarsContainer
+          .querySelectorAll('.edit-btn')
+          .forEach((button) => {
+
+            button.addEventListener(
+              'click',
+              () => {
+
+                const carId =
+                  button.dataset.id;
+
+                if (!carId) return;
+
+                localStorage.setItem(
+                  'am_dashboard_edit_car_id',
+                  String(carId)
+                );
+
+                window.location.href =
+                  'cars.html';
+              }
+            );
+          });
+
+        /* Delete */
+        recentCarsContainer
+          .querySelectorAll('.delete-btn')
+          .forEach((button) => {
+
+            button.addEventListener(
+              'click',
+              async () => {
+
+                const carId =
+                  Number(button.dataset.id);
+
+                if (!carId) return;
+
+                const carRow =
+                  button.closest('tr');
+
+                const carName =
+                  carRow
+                    ?.querySelector('strong')
+                    ?.textContent
+                    ?.trim() ||
+                  'هذه السيارة';
+
+                const confirmed =
+                  window.confirm(
+                    `هل أنت متأكد من حذف ${carName}؟`
+                  );
+
+                if (!confirmed) {
+                  return;
+                }
+
+                try {
+
+                  if (
+                    !window.supabase ||
+                    typeof window.supabase.from !== 'function'
+                  ) {
+                    throw new Error(
+                      'Supabase غير جاهز'
+                    );
+                  }
+
+                  const {
+                    error
+                  } = await window.supabase
+                    .from('cars')
+                    .delete()
+                    .eq('id', carId);
+
+                  if (error) {
+                    throw error;
+                  }
+
+                  await render();
+
+                  if (recentCarsContainer) {
+                    recentCarsContainer.insertAdjacentHTML(
+                      'afterbegin',
+                      `
+                        <div class="notice success">
+                          تم حذف السيارة بنجاح.
+                        </div>
+                      `
+                    );
+                  }
+
+                } catch (error) {
+
+                  console.error(
+                    'Delete failed:',
+                    error
+                  );
+
+                  if (recentCarsContainer) {
+                    recentCarsContainer.insertAdjacentHTML(
+                      'afterbegin',
+                      `
+                        <div class="notice error">
+                          تعذر حذف السيارة.
+                          يرجى المحاولة مرة أخرى.
+                        </div>
+                      `
+                    );
+                  }
+                }
+              }
+            );
+          });
+      };
+
+      /* =========================================================
+         ACTIVITY
+      ========================================================= */
+
+      const renderActivity = async () => {
+
+        if (!recentActivityContainer) {
+          return;
+        }
+
+        const cars =
+          await getRecentCars();
+
+        const messages =
+          await getMessages(20);
+
+        const items = [];
+
+        cars.forEach((car) => {
+
+          items.push({
+            type: 'car',
+
+            title:
+              `${car.brand || 'سيارة'} ${car.model || ''}`
+                .trim() ||
+              'سيارة جديدة',
+
+            subtitle:
+              car.created_at
+                ? new Date(
+                    car.created_at
+                  ).toLocaleString(
+                    'ar-MA',
+                    {
+                      dateStyle: 'medium',
+                      timeStyle: 'short'
+                    }
+                  )
+                : 'تمت إضافتها',
+
+            time:
+              car.created_at ||
+              new Date().toISOString()
+          });
+        });
+
+        messages.forEach((message) => {
+
+          items.push({
+            type: 'message',
+
+            title:
+              message.name ||
+              message.full_name ||
+              'رسالة جديدة',
+
+            subtitle:
+              message.subject ||
+              message.message ||
+              'رسالة واردة',
+
+            time:
+              message.created_at ||
+              new Date().toISOString()
+          });
+        });
+
+        items.sort(
+          (a, b) =>
+            new Date(b.time) -
+            new Date(a.time)
+        );
+
+        const latest =
+          items.slice(0, 6);
+
+        if (!latest.length) {
+          recentActivityContainer.innerHTML = `
+            <div class="empty-state">
+              <h3>لا توجد نشاطات حديثة</h3>
+              <p>
+                ليس هناك نشاطات قابلة للعرض من cars أو messages.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        recentActivityContainer.innerHTML = `
+          <ul class="activity-list">
+
+            ${latest.map((item) => `
+              <li class="activity-item">
+                <span class="activity-dot"></span>
+
+                <div>
+                  <strong>
+                    ${escapeHtml(item.title)}
+                  </strong>
+
+                  <small>
+                    ${escapeHtml(item.subtitle)}
+                  </small>
+                </div>
+              </li>
+            `).join('')}
+
+          </ul>
+        `;
+      };
+
+      /* =========================================================
+         ANALYTICS
+      ========================================================= */
+
+      const renderAnalytics = async () => {
+
+        if (!analyticsContainer) {
+          return;
+        }
+
+        const cars =
+          await getAllCars();
+
+        const messages =
+          await getMessages(100);
+
+        const statusCounts = {
+          available: 0,
+          reserved: 0,
+          sold: 0
+        };
+
+        const byMonth =
+          new Map();
+
+        cars.forEach((car) => {
+
+          const status =
+            car.status ||
+            'available';
+
+          if (
+            Object.prototype.hasOwnProperty.call(
+              statusCounts,
+              status
+            )
+          ) {
+            statusCounts[status] += 1;
+          }
+
+          if (!car.created_at) {
+            return;
+          }
+
+          const key =
+            new Date(
+              car.created_at
+            )
+              .toISOString()
+              .slice(0, 7);
+
+          byMonth.set(
+            key,
+            (byMonth.get(key) || 0) + 1
+          );
+        });
+
+        messages.forEach((message) => {
+
+          if (!message.created_at) {
+            return;
+          }
+
+          const key =
+            new Date(
+              message.created_at
+            )
+              .toISOString()
+              .slice(0, 7);
+
+          byMonth.set(
+            key,
+            (byMonth.get(key) || 0) + 1
+          );
+        });
+
+        const entries =
+          Array.from(
+            byMonth.entries()
+          )
+            .sort(
+              ([a], [b]) =>
+                a.localeCompare(b)
+            )
+            .slice(-6);
+
+        if (!entries.length) {
+          analyticsContainer.innerHTML = `
+            <div class="empty-state">
+              <h3>
+                لا توجد بيانات تحليلية كافية حالياً
+              </h3>
+
+              <p>
+                لا توجد بيانات كافية لتكوين مخطط مفيد في قاعدة البيانات الآن.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        const max =
+          Math.max(
+            ...entries.map(
+              ([, value]) => value
+            ),
+            1
+          );
+
+        const bars =
+          entries.map(
+            ([month, value]) => {
+
+              const height =
+                Math.max(
+                  (value / max) * 100,
+                  10
+                );
+
+              return `
+                <div class="analytics-bar-group">
+                  <div
+                    class="analytics-bar"
+                    style="height:${height}%"
+                    title="${escapeHtml(month)}: ${value}"
+                  ></div>
+
+                  <span>
+                    ${escapeHtml(month.slice(5))}
+                  </span>
+                </div>
+              `;
+            }
+          ).join('');
+
+        const statusHtml =
+          Object.entries(
+            statusCounts
+          )
+          .map(
+            ([key, value]) => {
+
+              const label =
+                key === 'available'
+                  ? 'متاحة'
+                  : key === 'reserved'
+                    ? 'محجوزة'
+                    : 'مباعة';
+
+              return `
+                <div class="analytics-status-item">
+                  <span>${label}</span>
+                  <strong>${safeCount(value)}</strong>
+                </div>
+              `;
+            }
+          )
+          .join('');
+
+        analyticsContainer.innerHTML = `
+          <div class="analytics-grid">
+
+            <div class="analytics-status-block">
+              <h4>حالة السيارات</h4>
+
+              <div class="analytics-status-list">
+                ${statusHtml}
+              </div>
+            </div>
+
+            <div class="analytics-chart-block">
+              <h4>النشاط الشهري</h4>
+
+              <div class="analytics-chart">
+                ${bars}
+              </div>
+            </div>
+
+          </div>
+        `;
+      };
+
+      /* =========================================================
+         NOTIFICATIONS
+      ========================================================= */
+
+      const renderNotifications = async () => {
+
+        if (!notificationList) {
+          return;
+        }
+
+        const messages =
+          await getMessages(20);
+
+        const list =
+          messages
+            .slice(0, 5)
+            .map((message) => ({
+              id: message.id,
+
+              text:
+                message.subject ||
+                message.name ||
+                'رسالة جديدة',
+
+              meta:
+                message.created_at
+                  ? new Date(
+                      message.created_at
+                    ).toLocaleDateString(
+                      'ar-MA'
+                    )
+                  : 'حديثاً',
+
+              unread:
+                window.__dashboardMessageStore__
+                  ? window.__dashboardMessageStore__.isUnread(message)
+                  : (message.status || 'new') !== 'read'
+            }));
+
+        const unreadCount =
+          list.filter(
+            (item) => item.unread
+          ).length;
+
+        if (notificationBadge) {
+
+          notificationBadge.textContent =
+            String(unreadCount);
+
+          notificationBadge.hidden =
+            unreadCount === 0;
+        }
+
+        if (notificationButton) {
+
+          notificationButton.setAttribute(
+            'aria-expanded',
+            String(
+              !notificationPanel?.classList.contains('hidden')
+            )
+          );
+        }
+
+        if (!list.length) {
+          notificationList.innerHTML = `
+            <div class="empty-state compact">
+              <h3>لا توجد إشعارات</h3>
+              <p>
+                لا توجد رسائل أو أنشطة جديدة حالياً.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        notificationList.innerHTML =
+          list.map((item) => `
+            <div
+              class="notification-item ${item.unread ? 'unread' : ''}"
+              data-id="${escapeHtml(String(item.id ?? ''))}"
+            >
+              <div class="notification-bullet"></div>
+
+              <div class="notification-copy">
+                <strong>
+                  ${escapeHtml(item.text)}
+                </strong>
+
+                <span>
+                  ${escapeHtml(item.meta)}
+                </span>
+              </div>
+            </div>
+          `).join('');
+      };
+
+      const markNotificationsRead = async () => {
+
+        try {
+
+          if (window.__dashboardMessageStore__) {
+            await window.__dashboardMessageStore__.markAllRead();
+            await renderNotifications();
+            return;
+          }
+
+          if (
+            !window.supabase ||
+            typeof window.supabase.from !== 'function'
+          ) {
+            return;
+          }
+
+          const {
+            data: unreadMessages,
+            error: fetchError
+          } = await window.supabase
+            .from('messages')
+            .select('id')
+            .eq('status', 'new');
+
+          if (fetchError) {
+            throw fetchError;
+          }
+
+          if (
+            !Array.isArray(unreadMessages) ||
+            !unreadMessages.length
+          ) {
+            await renderNotifications();
+            return;
+          }
+
+          const ids =
+            unreadMessages.map(
+              (message) => message.id
+            );
+
+          const {
+            error
+          } = await window.supabase
+            .from('messages')
+            .update({
+              status: 'read'
+            })
+            .in('id', ids);
+
+          if (error) {
+            throw error;
+          }
+
+          await renderNotifications();
+
+        } catch (error) {
+
+          console.warn(
+            'Unable to mark notifications as read:',
+            error
+          );
+        }
+      };
+
+      /* =========================================================
+         SEARCH
+      ========================================================= */
+
+      const bindHeaderSearch = () => {
+
+        if (!headerCarSearch) {
+          return;
+        }
+
+        const saved =
+          localStorage.getItem(
+            'am_dashboard_header_search'
+          ) || '';
+
+        if (saved) {
+          headerCarSearch.value =
+            saved;
+        }
+
+        headerCarSearch.addEventListener(
+          'input',
+          () => {
+
+            const value =
+              headerCarSearch.value.trim()
+                .toLowerCase();
+
+            localStorage.setItem(
+              'am_dashboard_header_search',
+              headerCarSearch.value.trim()
+            );
+
+            const rows =
+              document.querySelectorAll(
+                '.recent-cars-table tbody tr'
+              );
+
+            rows.forEach((row) => {
+
+              const text =
+                row.textContent
+                  .toLowerCase();
+
+              row.style.display =
+                !value ||
+                text.includes(value)
+                  ? ''
+                  : 'none';
+            });
+          }
+        );
+      };
+
+      /* =========================================================
+         THEME
+      ========================================================= */
+
+      const initTheme = () => {
+
+        const stored =
+          localStorage.getItem(
+            'admin:theme'
+          ) || 'dark';
+
+        const isLight =
+          stored === 'light';
+
+        document.body.classList.toggle(
+          'light-mode',
+          isLight
+        );
+
+        document.body.classList.toggle(
+          'dark-mode',
+          !isLight
+        );
+      };
+
+      const bindThemeToggle = () => {
+
+        if (!themeToggleBtn) {
+          return;
+        }
+
+        const updateThemeIcon = () => {
+
+          const lightMode =
+            document.body.classList.contains(
+              'light-mode'
+            );
+
+          themeToggleBtn.title =
+            lightMode
+              ? 'Switch to dark mode'
+              : 'Switch to light mode';
+        };
+
+        themeToggleBtn.addEventListener(
+          'click',
+          () => {
+
+            const isLight =
+              document.body.classList.toggle(
+                'light-mode'
+              );
+
+            document.body.classList.toggle(
+              'dark-mode',
+              !isLight
+            );
+
+            localStorage.setItem(
+              'admin:theme',
+              isLight
+                ? 'light'
+                : 'dark'
+            );
+
+            updateThemeIcon();
+          }
+        );
+
+        updateThemeIcon();
+      };
+
+      /* =========================================================
+         PROFILE / NOTIFICATION MENU
+      ========================================================= */
+
+      const setProfileMenuState = (open) => {
+
+        if (!profileMenu) {
+          return;
+        }
+
+        profileMenu.classList.toggle(
+          'hidden',
+          !open
+        );
+
+        if (profileTrigger) {
+          profileTrigger.setAttribute(
+            'aria-expanded',
+            String(open)
+          );
+        }
+      };
+
+      const setNotificationPanelState = (open) => {
+
+        if (!notificationPanel) {
+          return;
+        }
+
+        notificationPanel.classList.toggle(
+          'hidden',
+          !open
+        );
+
+        if (notificationButton) {
+          notificationButton.setAttribute(
+            'aria-expanded',
+            String(open)
+          );
+        }
+      };
+
+      const bindProfileMenu = () => {
+
+        if (window.__dashboardHeaderMenuBound__) {
+          return;
+        }
+        window.__dashboardHeaderMenuBound__ = true;
+
+        if (profileTrigger) {
+
+          profileTrigger.addEventListener(
+            'click',
+            () => {
+
+              const currentlyHidden =
+                profileMenu?.classList.contains(
+                  'hidden'
+                );
+
+              setProfileMenuState(
+                Boolean(currentlyHidden)
+              );
+
+              setNotificationPanelState(
+                false
+              );
+            }
+          );
+
+          profileTrigger.addEventListener(
+            'keydown',
+            (event) => {
+
+              if (
+                event.key === 'Enter' ||
+                event.key === ' '
+              ) {
+                event.preventDefault();
+
+                const currentlyHidden =
+                  profileMenu?.classList.contains(
+                    'hidden'
+                  );
+
+                setProfileMenuState(
+                  Boolean(currentlyHidden)
+                );
+              }
+            }
+          );
+        }
+
+        if (notificationButton) {
+
+          notificationButton.addEventListener(
+            'click',
+            () => {
+
+              const currentlyHidden =
+                notificationPanel?.classList.contains(
+                  'hidden'
+                );
+
+              setNotificationPanelState(
+                Boolean(currentlyHidden)
+              );
+
+              setProfileMenuState(
+                false
+              );
+            }
+          );
+        }
+
+        if (markReadBtn) {
+
+          markReadBtn.addEventListener(
+            'click',
+            async () => {
+              await markNotificationsRead();
+            }
+          );
+        }
+
+        document.addEventListener(
+          'click',
+          (event) => {
+
+            const target =
+              event.target;
+
+            const clickedInsideProfile =
+              profileTrigger &&
+              profileTrigger.contains(target);
+
+            const clickedInsideMenu =
+              profileMenu &&
+              profileMenu.contains(target);
+
+            const clickedOnNotification =
+              notificationButton &&
+              notificationButton.contains(target);
+
+            const clickedOnPanel =
+              notificationPanel &&
+              notificationPanel.contains(target);
+
+            if (
+              !clickedInsideProfile &&
+              !clickedInsideMenu
+            ) {
+              setProfileMenuState(false);
+            }
+
+            if (
+              !clickedOnNotification &&
+              !clickedOnPanel
+            ) {
+              setNotificationPanelState(false);
+            }
+          }
+        );
+
+        const menuActions =
+          document.querySelectorAll(
+            '.profile-menu-item'
+          );
+
+        menuActions.forEach((button) => {
+
+          button.addEventListener(
+            'click',
+            async () => {
+
+              const action =
+                button.dataset.action;
+
+              if (action === 'logout') {
+
+                await logout();
+
+                return;
+              }
+
+              if (
+                action === 'settings' ||
+                action === 'profile' ||
+                action === 'appearance'
+              ) {
+                window.location.href =
+                  'settings.html';
+                return;
+              }
+
+              if (action === 'language') {
+
+                const languageSwitcher =
+                  document.querySelector(
+                    '.lang-switcher'
+                  );
+
+                if (languageSwitcher) {
+                  languageSwitcher.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                  });
+                }
+
+                setProfileMenuState(false);
+              }
+            }
+          );
+        });
+      };
+
+      /* =========================================================
+         LANGUAGE UI
+      ========================================================= */
+
+      const bindLanguageButtons = () => {
+
+        if (window.__dashboardLanguageButtonsBound__) {
+          return;
+        }
+        window.__dashboardLanguageButtonsBound__ = true;
+
+        const buttons =
+          document.querySelectorAll(
+            '.lang-option'
+          );
+
+        buttons.forEach((button) => {
+
+          button.addEventListener(
+            'click',
+            () => {
+
+              buttons.forEach((item) => {
+                item.classList.remove('active');
+              });
+
+              button.classList.add('active');
+
+              const lang =
+                button.dataset.lang;
+
+              if (lang) {
+                localStorage.setItem(
+                  'am_dashboard_language',
+                  lang
+                );
+              }
+
+              /*
+                لا نغير dir/lang تلقائياً هنا،
+                لأن بقية الموقع خاصها نظام ترجمة موحد.
+              */
+            }
+          );
+        });
+      };
+
+      /* =========================================================
+         LOGOUT
+      ========================================================= */
+
+      const logout = async () => {
+
+        try {
+
+          if (
+            window.supabase &&
+            window.supabase.auth &&
+            typeof window.supabase.auth.signOut === 'function'
+          ) {
+            await window.supabase.auth.signOut();
+          }
+
+        } catch (error) {
+
+          console.error(
+            'Logout failed:',
+            error
+          );
+
+        } finally {
+
+          window.location.href =
+            'login.html';
+        }
+      };
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener(
+          'click',
+          logout
+        );
+      }
+
+      /* =========================================================
+         MASTER RENDER
+      ========================================================= */
+
+      const render = async () => {
+
+        renderLoading();
+
+        await renderDashboardCards();
+        await renderRecentCars();
+        await renderAnalytics();
+        await renderActivity();
+        await renderNotifications();
+        await setProfileMeta();
+      };
+
+      /* =========================================================
+         INITIALIZE
+      ========================================================= */
+
+      initTheme();
+      bindHeaderSearch();
+      bindThemeToggle();
+      bindProfileMenu();
+      bindLanguageButtons();
+
+      try {
+
+        await render();
+
+        console.log(
+          'Dashboard initialized successfully.'
+        );
+
+      } catch (error) {
+
+        console.error(
+          'Dashboard render failed:',
+          error
+        );
+
+        renderError(
+          'حدث خطأ أثناء تحميل لوحة التحكم.',
+          render
+        );
+      }
     });
   </script>
 </body>

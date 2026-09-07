@@ -48,33 +48,48 @@
       <header class="topbar">
         <div class="topbar-left">
           <div class="topbar-title">الإعدادات</div>
-          <div class="search-wrap" aria-label="Settings search">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>
-            <input type="text" placeholder="بحث في الإعدادات..." aria-label="Search settings" />
-          </div>
         </div>
 
         <div class="topbar-actions">
-          <button type="button" class="icon-button" aria-label="Notifications">
+          <button id="notificationButton" type="button" class="icon-button" aria-label="Notifications" aria-expanded="false">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5m6 0a3 3 0 1 1-6 0" /></svg>
-            <span class="icon-badge">1</span>
+            <span id="notificationBadge" class="icon-badge" hidden>0</span>
           </button>
 
           <div class="lang-switcher" aria-label="Language selector">
-            <button type="button" class="lang-option active">AR</button>
-            <button type="button" class="lang-option">FR</button>
-            <button type="button" class="lang-option">EN</button>
+            <button type="button" class="lang-option active" data-lang="ar">AR</button>
+            <button type="button" class="lang-option" data-lang="fr">FR</button>
+            <button type="button" class="lang-option" data-lang="en">EN</button>
           </div>
 
-          <div class="admin-pill">
+          <button type="button" id="profileTrigger" class="admin-pill" aria-expanded="false" aria-haspopup="menu">
             <div class="admin-avatar">AM</div>
             <div>
               <strong>Admin</strong>
               <small>Operations</small>
             </div>
-          </div>
+          </button>
         </div>
       </header>
+
+      <div id="notificationPanel" class="notification-panel hidden" aria-live="polite">
+        <div class="panel-header compact">
+          <div>
+            <p class="eyebrow">Notifications</p>
+            <h3>الإشعارات</h3>
+          </div>
+          <button type="button" class="btn btn-ghost" id="markNotificationsRead">تحديد كمقروء</button>
+        </div>
+        <div id="notificationList" class="notification-list"></div>
+      </div>
+
+      <div id="profileMenu" class="profile-menu hidden" role="menu" aria-label="Profile menu">
+        <button type="button" class="profile-menu-item" data-action="profile">Profile</button>
+        <button type="button" class="profile-menu-item" data-action="settings">Settings</button>
+        <button type="button" class="profile-menu-item" data-action="language">Language</button>
+        <button type="button" class="profile-menu-item" data-action="appearance">Appearance</button>
+        <button type="button" class="profile-menu-item danger" data-action="logout">Logout</button>
+      </div>
 
       <main class="dashboard-content">
         <section class="page-head">
@@ -88,6 +103,16 @@
           <div class="settings-layout">
             <div class="setting-group">
               <h3>Appearance</h3>
+              <div class="setting-row">
+                <div>
+                  <strong>Theme</strong>
+                  <p>اختر مظهر لوحة التحكم.</p>
+                </div>
+                <div class="theme-options" role="group" aria-label="Theme">
+                  <button type="button" class="theme-option" id="themeLight" data-theme="light">Light</button>
+                  <button type="button" class="theme-option" id="themeDark" data-theme="dark">Dark</button>
+                </div>
+              </div>
               <div class="setting-row">
                 <div>
                   <strong>RTL layout</strong>

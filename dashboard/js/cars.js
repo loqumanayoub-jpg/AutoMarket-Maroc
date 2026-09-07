@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const pendingEditId = Number(localStorage.getItem('am_dashboard_edit_car_id') || 0);
+    if (pendingEditId) {
+        localStorage.removeItem('am_dashboard_edit_car_id');
+    }
+
     const tableBody = document.getElementById('carsTableBody');
     const refreshBtn = document.getElementById('refreshBtn');
     if (!tableBody) return;
@@ -9,8 +14,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    await populateFuelFilter();
+
     // Initial load
     await fetchAndRenderCars(tableBody);
+
+    if (pendingEditId) {
+        setTimeout(() => {
+            if (typeof openEditCarModal === 'function') {
+                openEditCarModal(pendingEditId);
+            }
+        }, 150);
+    }
 
     // Wire up refresh button if present
     if (refreshBtn) {
@@ -50,32 +65,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (clearBtn) {
-        clearBtn.addEventListener('click', (e) => {
+        clearBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            document.getElementById('searchBrand').value = '';
-            document.getElementById('searchModel').value = '';
-            document.getElementById('searchCity').value = '';
-            // reload full list
-            fetchAndRenderCars(tableBody);
+            resetSearchFilters();
+            await fetchAndRenderCars(tableBody, {});
         });
     }
 
-    // Debounced live search on inputs
+    // Debounced live search on inputs and select changes
     const inputs = ['searchBrand','searchModel','searchCity','filterStatus','filterFuel','filterTransmission']
         .map(id => document.getElementById(id)).filter(Boolean);
     if (inputs.length) {
         let debounceTimer = null;
         inputs.forEach(inp => {
-            inp.addEventListener('input', () => {
+            const runLiveSearch = async () => {
                 if (debounceTimer) clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(async () => {
                     const filters = readSearchFilters();
                     await fetchAndRenderCars(tableBody, filters);
                 }, 400);
-            });
+            };
+
+            inp.addEventListener('input', runLiveSearch);
+            inp.addEventListener('change', runLiveSearch);
         });
     }
 });
+
+async function populateFuelFilter() {
+    const filter = document.getElementById('filterFuel');
+    if (!filter || !window.supabase || typeof window.supabase.from !== 'function') return;
+
+    const { data, error } = await window.supabase.from('cars').select('fuel');
+    if (error || !Array.isArray(data)) return;
+
+    const fuels = [...new Set(data.map((car) => String(car.fuel || '').trim()).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b));
+    filter.replaceChildren(new Option('وقود - الكل', ''));
+    fuels.forEach((fuel) => filter.add(new Option(fuel, fuel)));
+}
 
 async function fetchAndRenderCars(container, filters = {}) {
     showLoadingState(container);
@@ -253,6 +281,24 @@ function readSearchFilters() {
         fuel: (document.getElementById('filterFuel') || {}).value || '',
         transmission: (document.getElementById('filterTransmission') || {}).value || ''
     };
+}
+
+function resetSearchFilters() {
+    const formFields = [
+        'searchBrand',
+        'searchModel',
+        'searchCity',
+        'filterStatus',
+        'filterFuel',
+        'filterTransmission'
+    ];
+
+    formFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.value = '';
+        }
+    });
 }
 
 // Simple toast utility
@@ -575,10 +621,24 @@ async function openEditCarModal(carId) {
         return payload;
     }
 
-    // Helper: upload a File object to car-images and return public URL
     async function uploadFileToStorage(file) {
         if (!file) return null;
-        if (!window.supabase || !window.supabase.storage) throw new Error('Supabase storage is not available.');
+
+        if (!window.supabase || !window.supabase.storage) {
+            throw new Error('Supabase storage is not available.');
+        }
+
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+        if (!allowedTypes.includes(file.type)) {
+            throw new Error('نوع الصورة غير مسموح. استعمل JPG أو PNG أو WEBP.');
+        }
+
+        const maxSize = 5 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+            throw new Error('حجم الصورة خاصو ما يفوتش 5MB.');
+        }
 
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}_${Math.random().toString(36).substring(2,9)}.${fileExt}`;

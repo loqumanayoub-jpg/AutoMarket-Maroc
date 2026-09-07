@@ -1,18 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
   const rtlToggle = document.getElementById('rtlToggle');
   const compactToggle = document.getElementById('compactToggle');
+  const themeOptions = document.querySelectorAll('.theme-option');
 
   // Load saved prefs
   const prefs = JSON.parse(localStorage.getItem('admin:prefs') || '{}');
 
   function applyPrefs() {
-    if (prefs.rtl) {
-      document.documentElement.setAttribute('dir','rtl');
-      document.body.classList.add('rtl');
-    } else {
-      document.documentElement.setAttribute('dir','ltr');
-      document.body.classList.remove('rtl');
-    }
+    const isRtl = !!prefs.rtl;
+
+    document.documentElement.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+    document.documentElement.lang = localStorage.getItem('admin:lang') || 'ar';
+    document.body.classList.toggle('rtl', isRtl);
+    document.body.classList.toggle('ltr', !isRtl);
+    document.body.style.direction = isRtl ? 'rtl' : 'ltr';
 
     if (prefs.compact) {
       document.body.classList.add('compact-tables');
@@ -20,11 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('compact-tables');
     }
 
-    if (rtlToggle) rtlToggle.checked = !!prefs.rtl;
+    if (rtlToggle) rtlToggle.checked = isRtl;
     if (compactToggle) compactToggle.checked = !!prefs.compact;
   }
 
   applyPrefs();
+
+  function applyTheme(theme) {
+    const safeTheme = theme === 'light' ? 'light' : 'dark';
+    document.body.classList.toggle('light-mode', safeTheme === 'light');
+    document.body.classList.toggle('dark-mode', safeTheme === 'dark');
+    localStorage.setItem('admin:theme', safeTheme);
+    themeOptions.forEach((button) => {
+      const active = button.dataset.theme === safeTheme;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  applyTheme(localStorage.getItem('admin:theme') || 'dark');
+  themeOptions.forEach((button) => {
+    button.addEventListener('click', () => applyTheme(button.dataset.theme));
+  });
 
   function savePrefs() {
     localStorage.setItem('admin:prefs', JSON.stringify(prefs));
@@ -55,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       prefs.rtl = !!e.target.checked;
       applyPrefs();
       savePrefs();
+      document.dispatchEvent(new CustomEvent('admin:lang:changed', { detail: { lang: localStorage.getItem('admin:lang') || 'ar' } }));
     });
   }
 

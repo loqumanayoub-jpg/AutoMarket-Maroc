@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+  if (window.__dashboardUiBound__) {
+    return;
+  }
+  window.__dashboardUiBound__ = true;
+
   // Lightweight language support and RTL handling
   const SUPPORTED = ['ar','fr','en'];
   const DEFAULT = 'ar';
   const storageKey = 'admin:lang';
 
-  const langButtons = Array.from(document.querySelectorAll('.lang-option'));
+  const getLangButtons = () => Array.from(document.querySelectorAll('.lang-option'));
 
   function getSavedLang(){
     const v = localStorage.getItem(storageKey);
@@ -14,10 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveLang(l){ localStorage.setItem(storageKey, l); }
 
+  function syncLangButtons(lang){
+    const buttons = getLangButtons();
+    buttons.forEach((button) => {
+      const value = (button.dataset.lang || (button.textContent || '')).trim().toLowerCase();
+      button.classList.toggle('active', value === lang);
+    });
+  }
+
   const translations = {
     ar: {
       dashboard: 'لوحة التحكم', cars: 'السيارات', messages: 'الرسائل', settings: 'الإعدادات',
-      addCar: 'إضافة سيارة', refresh: 'تحديث', searchPlaceholder: 'بحث سريع في النظام...',
+      addCar: 'إضافة سيارة', refresh: 'تحديث', searchPlaceholder: 'بحث سريع في السيارات...',
       loginTitle: 'تسجيل الدخول', loginWelcome: 'مرحباً بك في AutoMarket Maroc', loginSubtitle: 'قم بتسجيل الدخول للمتابعة', loginButton: 'تسجيل الدخول',
       loginEmail: 'البريد الإلكتروني', loginPassword: 'كلمة المرور', loginRemember: 'تذكرني', loginForgot: 'نسيت كلمة المرور؟', loginResetTitle: 'إعادة تعيين كلمة المرور',
       pageHead: { overview: 'Royal dashboard', cars: 'إدارة السيارات', messages: 'سجل الرسائل', settings: 'إعدادات لوحة التحكم' },
@@ -45,16 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function applyLanguage(lang){
-  document.documentElement.lang = lang;
-  if (lang === 'ar') {
-    document.documentElement.setAttribute('dir','rtl');
-    document.body.classList.add('rtl');
-    document.body.classList.remove('ltr');
-  } else {
-    document.documentElement.setAttribute('dir','ltr');
-    document.body.classList.remove('rtl');
-    document.body.classList.add('ltr');
-  }
+  const safeLang = SUPPORTED.includes(lang) ? lang : DEFAULT;
+  document.documentElement.lang = safeLang;
+  document.documentElement.setAttribute('dir', safeLang === 'ar' ? 'rtl' : 'ltr');
+  document.body.classList.toggle('rtl', safeLang === 'ar');
+  document.body.classList.toggle('ltr', safeLang !== 'ar');
+  document.body.style.direction = safeLang === 'ar' ? 'rtl' : 'ltr';
+  syncLangButtons(safeLang);
 
   // small UI text substitutions for nav and common buttons
   const t = translations[lang] || translations[DEFAULT];
@@ -70,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addBtn = document.getElementById('addCarBtn'); if (addBtn) addBtn.textContent = t.addCar;
     const refreshBtn = document.getElementById('refreshBtn'); if (refreshBtn) refreshBtn.textContent = t.refresh;
-    document.querySelectorAll('.search-wrap input').forEach(inp => { inp.placeholder = t.searchPlaceholder; });
+    const headerCarSearch = document.getElementById('headerCarSearch');
+    if (headerCarSearch) headerCarSearch.placeholder = 'بحث سريع في السيارات...';
 
     // page headings
     document.querySelectorAll('.page-head h1').forEach(h => {
@@ -129,14 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
   applyLanguage(current);
 
   // Wire events
-  langButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const txt = (btn.textContent || '').trim().toLowerCase();
-      let target = 'ar';
-      if (txt.startsWith('fr')) target = 'fr';
-      if (txt.startsWith('en')) target = 'en';
+  getLangButtons().forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = (btn.dataset.lang || (btn.textContent || '').trim().toLowerCase()) || 'ar';
       setLang(target);
-      // notify other UI pieces
       document.dispatchEvent(new CustomEvent('admin:lang:changed', { detail: { lang: target } }));
     });
   });
